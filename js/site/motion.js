@@ -118,6 +118,18 @@ export function scrollToTarget(el, { offset } = {}) {
   }
 }
 
+/** Rola a página até uma posição (suave quando possível; `immediate` vai direto). */
+export function scrollToY(top, { immediate = false } = {}) {
+  top = Math.max(0, top);
+  if (lenis) {
+    const dist = Math.abs(top - window.scrollY);
+    lenis.scrollTo(top, immediate ? { immediate: true, force: true } : { duration: Math.min(1.2, Math.max(0.5, dist / 2600)), easing: (t) => 1 - Math.pow(1 - t, 4) });
+    wake();
+  } else {
+    window.scrollTo({ top, behavior: immediate || motion.reduced ? "auto" : "smooth" });
+  }
+}
+
 /** Volta a página para uma posição na hora (ex.: depois de redesenhar o cardápio). */
 export function restoreScroll(y) {
   if (lenis) { lenis.scrollTo(y, { immediate: true, force: true }); wake(); }

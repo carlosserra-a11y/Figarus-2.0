@@ -5,7 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Figaro's Pizzaria · Delivery de pizza em Palhoça, SC</title>
   <meta name="description" content="Peça pizza da Figaro's Pizzaria em Palhoça, SC: 57 sabores salgados com borda de requeijão e refri inclusos, pizzas doces, calzones, lasanhas, esfihas e combos. Entrega e retirada.">
-  <meta name="theme-color" content="#982C27">
+  <meta name="theme-color" content="#120c09">
+  <!-- tema (claro/escuro) e abertura decididos antes da primeira pintura -->
+  <script src="js/site/theme-boot.js"></script>
   <!-- Site no GitHub Pages + servidor publicado em outro endereço? Descomente e coloque o endereço do servidor:
   <meta name="figaros-api" content="https://SEU-SERVIDOR.up.railway.app/"> -->
   <link rel="icon" href="assets/img/favicon.png" type="image/png">
@@ -27,8 +29,10 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Caveat:wght@600..700&family=Nunito:wght@400..900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Caveat:wght@600..700&family=Nunito:wght@400..900&family=Space+Grotesk:wght@500..700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/site.css">
+  <!-- Figaro's 2.0 — "Futurismo Quente": tema escuro, vidro, luz e movimento (apague esta linha para voltar ao visual anterior) -->
+  <link rel="stylesheet" href="css/futuro.css">
   <link rel="modulepreload" href="js/shared/pricing.js">
 
   <script type="application/ld+json">
@@ -49,9 +53,18 @@
 
 <body>
   <a class="skip-link" href="#cardapio">Pular para o cardápio</a>
+
+  <!-- abertura: só na 1ª visita da sessão; some sozinha pelo CSS (mesmo se o JS falhar) -->
+  <div class="intro-screen" aria-hidden="true" style="display:none">
+    <div class="intro-pizza"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <img class="intro-logo" src="assets/img/logo-256.webp" alt="" width="96" height="96">
+  </div>
+
+  <div class="tone" id="tone" aria-hidden="true"></div>
   <canvas class="fx-canvas" id="fxCanvas" aria-hidden="true"></canvas>
   <canvas class="bg-canvas" id="bgCanvas" aria-hidden="true"></canvas>
-  <div class="scroll-progress" aria-hidden="true"><i id="scrollProgress"></i></div>
+  <div class="scroll-progress" aria-hidden="true"><i id="scrollProgress"></i><b class="spark" id="scrollSpark"></b></div>
+  <div class="grain" aria-hidden="true"></div>
 
   <div class="announcement" id="announcement" hidden></div>
 
@@ -67,6 +80,7 @@
       </a>
 
       <nav class="main-nav" aria-label="Seções">
+        <span class="nav-ink" aria-hidden="true"></span>
         <a href="#cardapio">Cardápio</a>
         <a href="#destaques">Destaques</a>
         <a href="#como-funciona">Como pedir</a>
@@ -76,6 +90,10 @@
 
       <div class="header-actions">
         <span class="status-pill" id="statusPill" data-open="unknown"><i></i><span>…</span></span>
+        <button class="icon-btn theme-btn" id="themeBtn" type="button" aria-label="Usar tema claro" aria-pressed="false">
+          <svg class="ico-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.7 14.6A8.6 8.6 0 0 1 9.4 3.3a.8.8 0 0 0-1-1A10.2 10.2 0 1 0 21.7 15.6a.8.8 0 0 0-1-1Z"/></svg>
+          <svg class="ico-sun" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10Zm0-5a1 1 0 0 1 1 1v1.5a1 1 0 1 1-2 0V3a1 1 0 0 1 1-1Zm0 17.5a1 1 0 0 1 1 1V21a1 1 0 1 1-2 0v-.5a1 1 0 0 1 1-1ZM2 12a1 1 0 0 1 1-1h1.5a1 1 0 1 1 0 2H3a1 1 0 0 1-1-1Zm17.5 0a1 1 0 0 1 1-1H21a1 1 0 1 1 0 2h-.5a1 1 0 0 1-1-1ZM4.9 4.9a1 1 0 0 1 1.4 0l1 1a1 1 0 0 1-1.4 1.4l-1-1a1 1 0 0 1 0-1.4Zm11.8 11.8a1 1 0 0 1 1.4 0l1 1a1 1 0 0 1-1.4 1.4l-1-1a1 1 0 0 1 0-1.4ZM19.1 4.9a1 1 0 0 1 0 1.4l-1 1a1 1 0 1 1-1.4-1.4l1-1a1 1 0 0 1 1.4 0ZM7.3 16.7a1 1 0 0 1 0 1.4l-1 1a1 1 0 0 1-1.4-1.4l1-1a1 1 0 0 1 1.4 0Z"/></svg>
+        </button>
         <button class="icon-btn" id="ordersBtn" type="button" aria-label="Meus pedidos" hidden>
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h12a1 1 0 0 1 1 1v18l-3-2-3 2-3-2-3 2-2-1.3V3a1 1 0 0 1 1-1Zm2 5v2h8V7H8Zm0 4v2h8v-2H8Zm0 4v2h5v-2H8Z"/></svg>
           <span class="dot" id="ordersDot" hidden></span>
@@ -102,13 +120,17 @@
 
   <main id="inicio">
     <!-- ======================= HERO ======================= -->
-    <section class="hero" aria-labelledby="heroTitle">
+    <section class="hero" id="hero" aria-labelledby="heroTitle">
       <div class="hero-bg" aria-hidden="true"></div>
+      <!-- grade em perspectiva (estilo synthwave, em tom de brasa) e escurecimento ao rolar -->
+      <div class="hero-grid" aria-hidden="true"><i></i></div>
+      <div class="hero-shade" aria-hidden="true"></div>
       <div class="container hero-inner">
         <div class="hero-copy" data-depth="0.12">
           <p class="eyebrow"><span class="eyebrow-line"></span>Forno aceso em Palhoça, SC</p>
-          <h1 id="heroTitle">A pizza do <span class="type-logo red">Figaro's</span>, quentinha <span class="hl-green type-logo">na sua porta.</span></h1>
-          <p class="hero-sub"><span id="flavorCount">57</span> sabores salgados, pizzas doces, calzones, lasanhas e esfihas. <strong>Toda pizza salgada já vem com borda de requeijão e refrigerante.</strong></p>
+          <!-- cada linha do título se separa numa camada ao rolar (--l) -->
+          <h1 id="heroTitle"><span class="hl" style="--l:0">A pizza do <span class="type-logo red">Figaro's</span>,</span> <span class="hl" style="--l:1">quentinha</span> <span class="hl" style="--l:2"><span class="hl-green type-logo">na sua porta.</span></span></h1>
+          <p class="hero-sub"><span id="flavorCount" data-count>57</span> sabores salgados, pizzas doces, calzones, lasanhas e esfihas. <strong>Toda pizza salgada já vem com borda de requeijão e refrigerante.</strong></p>
           <div class="hero-ctas">
             <a class="btn btn-primary btn-lg" href="#cardapio" data-magnetic>
               Pedir agora
@@ -150,6 +172,7 @@
           </div>
         </div>
       </div>
+      <a class="scroll-cue" href="#destaques" aria-label="Rolar para os destaques"><span class="scroll-cue-mouse"><i></i></span><span class="scroll-cue-txt">role</span></a>
     </section>
 
     <!-- faixa tricolor com sabores -->
@@ -159,6 +182,8 @@
 
     <!-- ======================= DESTAQUES ======================= -->
     <section class="section highlights" id="destaques" aria-labelledby="destaquesTitle">
+      <!-- no computador a seção fica presa e os cartões deslizam na horizontal enquanto a página desce -->
+      <div class="hl-pin" id="hlPin">
       <div class="container">
         <div class="section-head">
           <div>
@@ -171,8 +196,13 @@
           </div>
         </div>
         <div class="carousel" id="highlights" tabindex="0" aria-label="Itens em destaque"></div>
+        <div class="hl-meter" aria-hidden="true"><i id="hlMeter"></i></div>
+      </div>
       </div>
     </section>
+
+    <!-- divisor: traço de luz desenhado pela rolagem -->
+    <div class="divider" aria-hidden="true"><svg viewBox="0 0 1200 60" preserveAspectRatio="none"><path pathLength="1" d="M0 30 C150 6 300 54 450 30 S750 6 900 30 S1125 50 1200 26"/></svg></div>
 
     <!-- ======================= CARDÁPIO ======================= -->
     <section class="section menu-section" id="cardapio" aria-labelledby="cardapioTitle">
@@ -219,6 +249,9 @@
             <p class="eyebrow"><span class="eyebrow-line"></span>Simples assim</p>
             <h2 class="section-title" id="stepsTitle" data-split>Do forno direto <span class="type-logo green">pra sua mesa</span></h2>
             <div class="story-bar" aria-hidden="true"><i></i></div>
+            <div class="steps-track">
+            <!-- linha de luz que liga os 3 passos e acende com a rolagem -->
+            <span class="steps-line" aria-hidden="true"><i></i><b></b><b></b><b></b></span>
             <ol class="steps-list" data-stagger>
               <li class="step reveal">
                 <span class="step-num">1</span>
@@ -242,6 +275,7 @@
                 </div>
               </li>
             </ol>
+            </div>
           </div>
         </div>
       </div>
@@ -259,7 +293,15 @@
         <div class="about-copy reveal">
           <p class="eyebrow light"><span class="eyebrow-line"></span>Ponte do Imaruim · Palhoça</p>
           <h2 class="section-title light" id="sobreTitle" data-split data-swash="gold">Pizzaria de bairro, do jeito que tem que ser.</h2>
-          <p class="lead">Pizza bem recheada, com borda de requeijão e refrigerante já no preço. No salão tem <strong>rodízio de pizzas</strong> e, no almoço, <strong>buffet completo</strong>. Em casa é a mesma pizza — só que chegando quentinha na sua porta.</p>
+          <!-- data-paint: as palavras acendem uma a uma conforme a rolagem -->
+          <p class="lead" data-paint>Pizza bem recheada, com borda de requeijão e refrigerante já no preço. No salão tem <strong>rodízio de pizzas</strong> e, no almoço, <strong>buffet completo</strong>. Em casa é a mesma pizza — só que chegando quentinha na sua porta.</p>
+          <!-- números da casa (contam do zero ao aparecer; os valores vêm do cardápio) -->
+          <ul class="stats" id="stats">
+            <li><b data-count data-stat="savory">59</b><span>sabores salgados</span></li>
+            <li><b data-count data-stat="sweet">14</b><span>pizzas doces</span></li>
+            <li><b data-count data-stat="flavors">3</b><span>sabores numa Gigante</span></li>
+            <li><b data-count data-stat="slices">12</b><span>fatias na Gigante</span></li>
+          </ul>
           <ul class="about-points" data-stagger>
             <li><span class="ico-slot" data-icon="slice"></span>Pizzas bem recheadas</li>
             <li><span class="ico-slot" data-icon="cheese"></span>Borda de requeijão inclusa</li>
@@ -286,6 +328,8 @@
         <div class="reviews-grid" id="reviewsGrid"></div>
       </div>
     </section>
+
+    <div class="divider flip" aria-hidden="true"><svg viewBox="0 0 1200 60" preserveAspectRatio="none"><path pathLength="1" d="M0 34 C200 56 360 8 560 30 S900 54 1040 28 S1160 12 1200 30"/></svg></div>
 
     <!-- ======================= CONTATO ======================= -->
     <section class="section contact" id="contato" aria-labelledby="contatoTitle">

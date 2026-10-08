@@ -14,6 +14,11 @@ import { closeLayer } from "./dialog.js";
 import { initScrollFx, getStoryProgress } from "./scrollfx.js";
 import { ticker, initSmoothScroll, scrollToTarget, initFpsMeter } from "./motion.js";
 import { icon } from "./icons.js";
+// Figaro's 2.0 — "Futurismo Quente"
+import { initTheme } from "./theme.js";
+import { initIntro } from "./preloader.js";
+import { initReveal, setCount } from "./reveal.js";
+import { initPointerFx, haptic } from "./cursor.js";
 
 const PARAMS = new URLSearchParams(location.search);
 
@@ -147,7 +152,8 @@ function renderStore(menu) {
   setHTML($("#socials"), socials);
 
   const savory = (menu.flavors || []).filter((f) => f.productId === "pizza-salgada").length;
-  if (savory) $("#flavorCount").textContent = savory;
+  if (savory) setCount($("#flavorCount"), savory);
+  renderStats(menu);
 
   if (s.rating) {
     const r = $("#heroRating");
@@ -161,6 +167,24 @@ function renderStore(menu) {
   }
 }
 
+/* ---------- Números da casa (seção "Sobre"): vêm do cardápio ---------- */
+function renderStats(menu) {
+  const flavors = menu.flavors || [];
+  const sizes = (menu.products || []).filter((p) => p.kind === "pizza").flatMap((p) => p.sizes || []);
+  const biggest = sizes.reduce((a, b) => ((b.cm || 0) > (a?.cm || 0) ? b : a), null);
+  const values = {
+    savory: flavors.filter((f) => f.productId === "pizza-salgada").length,
+    sweet: flavors.filter((f) => f.productId === "pizza-doce").length,
+    flavors: Math.max(0, ...sizes.map((s) => s.maxFlavors || 1)),
+    slices: biggest?.slices || 0,
+  };
+  $$("#stats [data-stat]").forEach((el) => {
+    const v = values[el.dataset.stat];
+    if (v > 0) setCount(el, v);
+    else el.closest("li").hidden = true;
+  });
+}
+
 function renderMarquee(menu) {
   const names = (menu.flavors || []).filter((f) => f.productId === "pizza-salgada" || f.popular).map((f) => f.name);
   const pick = [...new Set(names)].slice(0, 24);
@@ -171,6 +195,8 @@ function renderMarquee(menu) {
 
 /* ---------- Início ---------- */
 async function start() {
+  initIntro();
+  initTheme();
   initChrome();
   initSmoothScroll();
   if (PARAMS.has("fps")) initFpsMeter();
@@ -179,6 +205,8 @@ async function start() {
   initMagnetic();
   observeReveal();
   initScrollFx();
+  initReveal();
+  initPointerFx();
 
   let menu;
   try {
@@ -198,10 +226,11 @@ async function start() {
     const r = priceItem(idx, sel);
     if (!r.ok) return toast(r.errors[0], "err");
     cart.add(sel);
+    haptic();
     flyToCart(cardEl?.querySelector("img")?.currentSrc, cardEl);
     toast(`${r.title} no carrinho!`, "ok");
   };
-  const onAdded = (sel, { editKey }) => (editKey ? cart.replace(editKey, sel) : cart.add(sel));
+  const onAdded = (sel, { editKey }) => { haptic(); return editKey ? cart.replace(editKey, sel) : cart.add(sel); };
 
   initBuilder(idx, { onAdded });
   initMenu(idx, { onOpen: openBuilder, onQuickAdd: quickAdd });

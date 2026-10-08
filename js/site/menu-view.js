@@ -14,6 +14,7 @@ import { attachTilt } from "./fx.js";
 import { observeCards } from "./scrollfx.js";
 import { motion, scrollToTarget, ticker } from "./motion.js";
 import { icon, categoryIcon } from "./icons.js";
+import { scrollHighlightsBy } from "./reveal.js";
 
 const TAG_LABELS = { frango: "Frango", carnes: "Carnes", "frutos-do-mar": "Frutos do mar", queijos: "Queijos", vegetariana: "Vegetarianas", picante: "Picantes" };
 const TIER_LABELS = { tradicional: "Tradicionais", especial: "Especiais" };
@@ -446,6 +447,13 @@ function refreshProduct(pid, opts = {}) {
   }
 }
 
+/** Nomes únicos para cada linha (o navegador anima cada uma até a posição nova). */
+function nameRows(block, on) {
+  block.querySelectorAll(".mrow-main[data-flavor]").forEach((b) => {
+    b.parentElement.style.viewTransitionName = on ? `fr-${b.dataset.flavor.replace(/[^\w-]/g, "")}` : "";
+  });
+}
+
 /* ---------- Busca ---------- */
 function resultRow(e, i) {
   if (e.type === "flavor") return flavorRow(e.product, e.flavor, sizeOf(e.product), null, i, { showPrice: true });
@@ -477,6 +485,46 @@ function renderSearch() {
     <header class="mgroup-head"><h4>${categoryIcon(g.c)}${g.c.name} <small>${g.list.length} resultado${g.list.length > 1 ? "s" : ""}</small></h4></header>
     <ul class="mrows">${g.list.map((e, i) => resultRow(e, i))}</ul>
   </section>`)}</div>`);
+  markTerms(body.querySelectorAll(".mrow-name, .mrow-desc"), terms);
+}
+
+/** Destaca na tela o que foi buscado (sem acento/maiúscula), direto no DOM — nada vira HTML. */
+function markTerms(els, terms) {
+  if (!terms.length) return;
+  const fold = (ch) => ch.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
+  els.forEach((el) => {
+    const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+    const nodes = [];
+    while (walker.nextNode()) nodes.push(walker.currentNode);
+    for (const node of nodes) {
+      const text = node.textContent;
+      const chars = [...text];
+      const folded = chars.map(fold);
+      if (folded.some((c) => c.length !== 1)) continue; // letra que vira 0 ou 2: não arrisca
+      const flat = folded.join("");
+      const hits = [];
+      for (const t of terms) {
+        let i = flat.indexOf(t);
+        while (i >= 0) { hits.push([i, i + t.length]); i = flat.indexOf(t, i + t.length); }
+      }
+      if (!hits.length) continue;
+      hits.sort((a, b) => a[0] - b[0]);
+      // tudo num <span>: no nome do sabor (flex) o texto não se separa em pedaços
+      const frag = document.createElement("span");
+      let at = 0;
+      for (const [a, b] of hits) {
+        if (a < at) continue;
+        if (a > at) frag.append(chars.slice(at, a).join(""));
+        const m = document.createElement("mark");
+        m.className = "hit";
+        m.textContent = chars.slice(a, b).join("");
+        frag.append(m);
+        at = b;
+      }
+      if (at < chars.length) frag.append(chars.slice(at).join(""));
+      node.replaceWith(frag);
+    }
+  });
 }
 
 export function renderMenu() {
@@ -631,10 +679,19 @@ export function initMenu(idx, { onOpen, onQuickAdd }) {
     }
     const chip = t.closest("[data-filter]");
     if (chip) {
-      view.filters[chip.dataset.for] = chip.dataset.filter;
-      // as linhas do filtro novo entram em cascata
-      const groups = groupsOf(idx.products.get(chip.dataset.for), flavorsOf(idx, chip.dataset.for));
-      refreshProduct(chip.dataset.for, { lateFrom: Object.fromEntries(groups.map((g) => [g.key, 0])) });
+      const pid = chip.dataset.for;
+      view.filters[pid] = chip.dataset.filter;
+      const block = $(`#menuBody [data-product-block="${CSS.escape(pid)}"]`);
+      // com View Transitions: as linhas que continuam deslizam para o lugar novo e as outras somem/aparecem
+      if (document.startViewTransition && !motion.reduced && block) {
+        nameRows(block, true);
+        const vt = document.startViewTransition(() => { refreshProduct(pid); nameRows(block, true); });
+        vt.finished.finally(() => nameRows(block, false));
+        return;
+      }
+      // sem View Transitions: as linhas do filtro novo entram em cascata
+      const groups = groupsOf(idx.products.get(pid), flavorsOf(idx, pid));
+      refreshProduct(pid, { lateFrom: Object.fromEntries(groups.map((g) => [g.key, 0])) });
       return;
     }
     const add = t.closest("[data-add-pizza]");
@@ -668,6 +725,7 @@ export function initMenu(idx, { onOpen, onQuickAdd }) {
   });
 
   document.querySelectorAll("[data-scroll]").forEach((b) => b.addEventListener("click", () => {
+    if (scrollHighlightsBy(Number(b.dataset.scroll))) return; // seção presa: a página rola e os cartões andam
     const c = $("#highlights");
     c.scrollBy({ left: Number(b.dataset.scroll) * c.clientWidth * 0.8, behavior: "smooth" });
   }));

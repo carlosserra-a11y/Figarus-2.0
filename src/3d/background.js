@@ -55,7 +55,9 @@ export function createBackgroundScene({ canvas, tier, covers = [], onReady, onFa
   let dpr = Math.min(window.devicePixelRatio || 1, tier.bgDpr);
   const renderer = createRenderer(canvas, { antialias: !tier.low, dpr });
   scene.environmentIntensity = 0.9;
-  const cream = new Color(0xf4ecd9);
+  // a névoa tem a cor do fundo da página (--fog-3d): creme no tema claro, carvão no escuro
+  const fogHex = () => getComputedStyle(document.documentElement).getPropertyValue("--fog-3d").trim() || "#f4ecd9";
+  const cream = new Color(fogHex());
   scene.fog = new Fog(cream, 13, 34);
   const camera = new PerspectiveCamera(FOV, 1, 0.1, 60);
   camera.position.z = CAM_Z;
@@ -256,6 +258,14 @@ export function createBackgroundScene({ canvas, tier, covers = [], onReady, onFa
     },
     fail() { self.dead = true; self.active = false; onFail?.(); },
   };
+  // trocou o tema (claro/escuro): a névoa acompanha e o fundo é redesenhado
+  document.addEventListener("figaros:theme", () => {
+    const c = fogHex();
+    cream.set(c);
+    scene.fog.color.set(c);
+    lastRender = -1;
+    wake();
+  });
   guardContext(renderer, {
     onLost() { self.dead = true; self.active = false; onFail?.(); },
     onRestored() { self.dead = false; self.active = true; document.documentElement.classList.add("bg-3d"); },

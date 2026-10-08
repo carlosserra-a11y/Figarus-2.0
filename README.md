@@ -130,6 +130,23 @@ js/vendor/lenis.mjs     Lenis (rolagem suave, MIT) — gerado com npm run build:
 sw.js                   service worker: imagens em cache e site abrindo sem internet
 ```
 
+## 🔥 Figaro's 2.0 — "Futurismo Quente"
+
+Visual novo por cima do site: **tema escuro "Forno à Noite"** como padrão (o claro continua no botão ☀/☾ do topo, e a escolha fica salva no aparelho), vidro, brilho de brasa e animações ligadas à rolagem.
+
+| O quê | Onde |
+|---|---|
+| Cores, vidro, brilhos, tema escuro e todas as animações em CSS | `css/futuro.css` (apague o `<link>` dele no `index.html` para voltar ao visual anterior) |
+| Tema antes da página pintar + decisão da abertura | `js/site/theme-boot.js` (arquivo separado porque o servidor bloqueia script inline) |
+| Botão de tema (círculo que se abre a partir do botão) | `js/site/theme.js` |
+| Topo em camadas, header que vira pílula e some ao descer, destaques presos com rolagem horizontal, contadores, texto pintado no "Sobre", nós da linha do "Como pedir", tom do fundo por seção, divisores | `js/site/reveal.js` |
+| Cursor próprio, luz que segue o mouse nos cartões, ondinha no clique, vibração ao adicionar | `js/site/cursor.js` |
+| Abertura (só na 1ª visita da sessão, ~1,1 s) | `js/site/preloader.js` |
+
+Tudo roda no laço único de `motion.js`, respeita "reduzir movimento" (nada se mexe, tudo aparece) e diminui o brilho/blur em aparelhos modestos ou com economia de dados (`html.lite`). O fundo 3D acompanha o tema (névoa da cor da página).
+
+Endereços de teste novos (somam com os de baixo): `?nointro` (sem abertura), `?nocursor` (cursor normal), `?nopin` (destaques sem a seção presa).
+
 ## 🧊 Modelos 3D
 
 O código 3D fica em `src/3d/` e é empacotado (com só o necessário do three.js) em `js/site/3d.js` e `js/site/3d-worker.js`:

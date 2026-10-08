@@ -4,8 +4,8 @@
   "description": "Cardápio e pedidos da Figaro's Pizzaria — Palhoça, SC",
   "start_url": "./",
   "display": "standalone",
-  "background_color": "#f4ecd9",
-  "theme_color": "#982c27",
+  "background_color": "#120c09",
+  "theme_color": "#120c09",
   "lang": "pt-BR",
   "icons": [
     { "src": "assets/img/icon-192.png", "sizes": "192x192", "type": "image/png" },

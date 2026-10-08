@@ -1,5 +1,16 @@
 # Desempenho e qualidade visual — antes e depois
 
+## Rodada 3 — Figaro's 2.0 (correções)
+
+- **Travamento na rolagem suave (já existia antes do 2.0):** quando o Lenis avisava "rolei" no meio de um quadro, o laço de `motion.js` era agendado duas vezes; a cada quadro o número de laços dobrava (1, 2, 4, 8…) até a página congelar — bastava clicar num link do menu ou rolar com a rodinha do mouse no computador. Agora existe um único próximo quadro, chamadas repetidas no mesmo quadro são ignoradas e a velocidade da rolagem nunca vira `NaN`. O laço reserva do 3D (`src/3d/core.js`) recebeu a mesma correção.
+- Header: voltava a ficar preso visível depois de clicar num link do menu com o mouse; agora só fica visível com foco vindo do teclado.
+- Luz que segue o mouse: em combos, cartão de contato e depoimentos a borda luminosa podia "vazar" para fora do cartão (faltava `position: relative`).
+- Cursor: o rótulo ("Ver", "Pedir") agora se atualiza quando a página rola com o mouse parado; caneta (pen) também ganha o cursor.
+- Busca: o termo destacado não quebra mais o nome do sabor em pedaços e não marca os selos ("destaque").
+- Acessibilidade: status aberto/fechado continua para leitores de tela quando só o ponto aparece; botão de tema sem `aria-pressed` conflitante; setas do teclado funcionam nos destaques presos.
+- Página de créditos segue o tema escolhido (links legíveis no escuro); `manifest` com as cores do tema escuro.
+
+
 ## Rodada 2 — cardápio mais curto e explicado
 
 | Medida | Antes | Depois |

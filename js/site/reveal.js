@@ -33,6 +33,8 @@ let spark = null, maxScroll = 1, lastY = -1, dirty = true;
 
 /* ---------- Medidas (só em resize / mudança de altura da página) ---------- */
 const docTop = (el) => el.getBoundingClientRect().top + window.scrollY;
+/** Foco vindo do teclado? (navegador antigo sem :focus-visible: considera qualquer foco) */
+const focusVisible = (el) => { try { return el.matches(":focus-visible"); } catch { return true; } };
 
 function measurePin() {
   if (!pin.sec || pin.sec.hidden) return;
@@ -85,7 +87,9 @@ function headerTick(y) {
   hdr.lastY = y;
   const pill = y > 24 && !navOpen();
   if (pill !== hdr.pill) { hdr.pill = pill; hdr.el.classList.toggle("pill", pill); }
-  if (motion.reduced || y < 140 || navOpen() || document.body.classList.contains("no-scroll") || hdr.el.contains(document.activeElement)) { hdr.acc = 0; setHidden(false); return; }
+  // fica visível: no topo, com o menu do celular aberto, com modal aberto ou navegando pelo teclado dentro do header
+  // (foco de clique do mouse não conta — senão o header nunca sumia depois de clicar num link do menu)
+  if (motion.reduced || y < 140 || navOpen() || document.body.classList.contains("no-scroll") || (hdr.el.contains(document.activeElement) && focusVisible(document.activeElement))) { hdr.acc = 0; setHidden(false); return; }
   if (dy === 0) return;
   if ((dy > 0) !== (hdr.acc > 0)) hdr.acc = 0;
   hdr.acc += dy;
@@ -121,7 +125,7 @@ function tick(f) {
 
   // topo: 0 → 1 enquanto ele sai da tela
   if (hero.el && !motion.reduced) {
-    const p = clamp01((y - hero.top + 76) / (hero.h * 0.9));
+    const p = clamp01(y / (hero.top + hero.h * 0.85));
     if (Math.abs(p - hero.last) > 0.002) { hero.last = p; hero.el.style.setProperty("--hp", p.toFixed(3)); }
   }
 
@@ -173,11 +177,19 @@ function initPin() {
   }, { passive: true });
   // teclado (Tab) dentro da seção presa: leva a página até o cartão focado
   pin.track.addEventListener("focusin", (e) => {
-    if (!pin.on || !e.target.matches?.(":focus-visible")) return;
+    if (!pin.on || !focusVisible(e.target)) return;
     const card = e.target.closest(".card");
     if (!card) return;
     const p = clamp01((card.offsetLeft - 24) / pin.dist);
     scrollToY(pin.top + (p * pin.dist) / PIN_SPEED, { immediate: true });
+  });
+  // setas do teclado no carrossel preso: a página rola e os cartões andam
+  pin.track.addEventListener("keydown", (e) => {
+    if (!pin.on || e.target !== pin.track) return;
+    const dir = { ArrowRight: 1, ArrowLeft: -1 }[e.key];
+    if (!dir) return;
+    e.preventDefault();
+    scrollHighlightsBy(dir);
   });
   // o carrossel é redesenhado (tamanho escolhido, cardápio carregado): mede de novo
   new MutationObserver(() => requestAnimationFrame(measure)).observe(pin.track, { childList: true });

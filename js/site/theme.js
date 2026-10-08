@@ -14,7 +14,6 @@ function apply(theme, { save = false } = {}) {
   root.dataset.theme = theme;
   const btn = document.getElementById("themeBtn");
   if (btn) {
-    btn.setAttribute("aria-pressed", String(theme === "light"));
     btn.setAttribute("aria-label", theme === "dark" ? "Usar tema claro" : "Usar tema escuro");
     btn.title = theme === "dark" ? "Tema claro" : "Tema escuro";
   }

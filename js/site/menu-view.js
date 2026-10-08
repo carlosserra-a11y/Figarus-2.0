@@ -493,7 +493,8 @@ function markTerms(els, terms) {
   if (!terms.length) return;
   const fold = (ch) => ch.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
   els.forEach((el) => {
-    const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+    // selos ("destaque", "mais pedida") ficam de fora
+    const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, { acceptNode: (n) => (n.parentElement?.closest(".mk, .mk-ico") ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT) });
     const nodes = [];
     while (walker.nextNode()) nodes.push(walker.currentNode);
     for (const node of nodes) {

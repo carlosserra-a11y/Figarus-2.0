@@ -62,11 +62,14 @@ export function useTicker(ticker) {
   const f = { t: 0, dt: 1 / 60, y: window.scrollY, vel: 0, vw: window.innerWidth, vh: window.innerHeight };
   let raf = 0, last = 0;
   const loop = (now) => {
+    if (last && now <= last) return; // repetido no mesmo quadro (wake() durante o quadro): ignora
     raf = 0;
     f.dt = last ? Math.min(0.05, (now - last) / 1000) : 1 / 60; last = now; f.t = now / 1000;
     const y = window.scrollY; f.vel += ((y - f.y) / f.dt - f.vel) * Math.min(1, f.dt * 8); f.y = y;
+    if (!Number.isFinite(f.vel)) f.vel = 0;
     f.vw = window.innerWidth; f.vh = window.innerHeight;
-    if (tickAll(f) && !document.hidden) raf = requestAnimationFrame(loop); else last = 0;
+    // um único próximo quadro (antes podiam ser dois, e eles se multiplicavam)
+    if (tickAll(f) && !document.hidden) { if (!raf) raf = requestAnimationFrame(loop); } else if (!raf) last = 0;
   };
   host = { wake() { if (!raf && !document.hidden) raf = requestAnimationFrame(loop); } };
   window.addEventListener("scroll", host.wake, { passive: true });

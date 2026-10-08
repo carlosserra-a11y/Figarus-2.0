@@ -307,7 +307,11 @@ html.hdr-hide .cat-bar { top: 0; }
 .status-pill span { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
 @media (max-width: 1280px) { .main-nav a { padding: 10px 11px; } .status-pill { max-width: 200px; } }
 /* notebook pequeno: menu completo + carrinho não cabem com o texto do status (fica só o ponto; o texto vai no title) */
-@media (max-width: 1240px) and (min-width: 1081px) { .status-pill { padding: 8px; } .status-pill span { display: none; } }
+@media (max-width: 1240px) and (min-width: 1081px) { .status-pill { padding: 8px; } }
+/* onde só cabe o ponto, o texto continua para leitores de tela (antes: display:none) */
+@media (max-width: 1240px) and (min-width: 1081px), (max-width: 640px) {
+  .status-pill span { display: inline; position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+}
 .nav-ink { position: absolute; left: 0; top: 50%; height: 40px; margin-top: -20px; width: 0; z-index: 0; border-radius: 999px; pointer-events: none; opacity: 0;
   background: rgba(152, 44, 39, .1); box-shadow: inset 0 0 0 1px rgba(152, 44, 39, .22);
   transition: transform .55s var(--spring), width .55s var(--spring), opacity .3s; }
@@ -399,7 +403,7 @@ html[data-theme] .spot { background-image: radial-gradient(280px circle at var(-
   background: radial-gradient(160px circle at var(--sx, -999px) var(--sy, -999px), var(--spot-edge), transparent 70%);
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; }
 .spot:hover::after { opacity: 1; }
-.size, .stats li, .about-points li { position: relative; }
+.size, .stats li, .about-points li, .combo, .contact-card, .review { position: relative; }
 /* a foto "salta" do cartão no hover */
 .card:hover .card-media img { transform: scale(1.1) translateY(-3px); filter: saturate(1.12) contrast(1.04); }
 /* busca: o termo encontrado fica marcado; os resultados entram em cascata */

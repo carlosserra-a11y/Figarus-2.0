@@ -34,6 +34,10 @@ let raf = 0, last = 0, lenis = null;
 let lenisTime = 0;
 
 function loop(now) {
+  // Segunda chamada no mesmo quadro: ignora. (Antes, quem chamava wake() durante o quadro — o Lenis avisa
+  // "rolei" no meio dele — agendava um laço e o fim do quadro agendava OUTRO: a cada quadro o número de laços
+  // dobrava (1, 2, 4, 8…) até a página travar na rolagem suave; e com dt = 0 a velocidade virava NaN.)
+  if (last && now <= last) return;
   raf = 0;
   frame.dt = last ? Math.min(0.05, (now - last) / 1000) : 1 / 60;
   last = now;
@@ -41,13 +45,15 @@ function loop(now) {
   if (lenis) { lenisTime += frame.dt * 1000; lenis.raf(lenisTime); }
   const y = window.scrollY;
   frame.vel += ((y - frame.y) / frame.dt - frame.vel) * Math.min(1, frame.dt * 8);
+  if (!Number.isFinite(frame.vel)) frame.vel = 0;
   frame.y = y;
   let busy = Math.abs(frame.vel) > 1 || !!lenis?.isScrolling;
   for (const fn of subs) {
     try { if (fn(frame)) busy = true; } catch (e) { console.error("[animação]", e); subs.delete(fn); }
   }
-  if (busy && !document.hidden) raf = requestAnimationFrame(loop);
-  else { last = 0; frame.vel = 0; }
+  // um único próximo quadro (wake() pode já ter agendado durante este)
+  if (busy && !document.hidden) { if (!raf) raf = requestAnimationFrame(loop); }
+  else if (!raf) { last = 0; frame.vel = 0; }
 }
 
 /** Acorda o laço (rolagem, ponteiro, algo novo para animar). */

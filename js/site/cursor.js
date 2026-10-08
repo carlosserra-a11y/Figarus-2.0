@@ -47,26 +47,36 @@ function initCursor() {
     label.textContent = txt;
     el.classList.toggle("has-label", !!txt);
   };
-  document.addEventListener("pointermove", (e) => {
-    if (e.pointerType !== "mouse") return;
-    st.x = e.clientX; st.y = e.clientY;
-    if (!st.on) { st.on = true; st.rx = st.x; st.ry = st.y; }
-    const t = e.target instanceof Element ? e.target : null;
+  /** Atualiza anel/rótulo conforme o que está embaixo do ponteiro. */
+  const sync = (t) => {
     const texty = !!t?.closest(TEXTY);
     el.classList.toggle("is-hidden", texty);
     el.classList.toggle("is-hover", !!t?.closest(INTERACTIVE) && !texty);
     setLabel(t && !texty ? labelFor(t) : "");
+  };
+  // mouse e caneta (no toque não existe cursor)
+  document.addEventListener("pointermove", (e) => {
+    if (cur?.el !== el || e.pointerType === "touch") return;
+    st.x = e.clientX; st.y = e.clientY;
+    if (!st.on) { st.on = true; st.rx = st.x; st.ry = st.y; }
+    sync(e.target instanceof Element ? e.target : null);
     dot.style.transform = `translate3d(${st.x}px, ${st.y}px, 0)`;
     ticker.wake();
   }, { passive: true });
-  document.addEventListener("pointerdown", (e) => { if (e.pointerType === "mouse") el.classList.add("is-down"); });
+  document.addEventListener("pointerdown", (e) => { if (e.pointerType !== "touch") el.classList.add("is-down"); });
   document.addEventListener("pointerup", () => el.classList.remove("is-down"));
   document.documentElement.addEventListener("mouseleave", () => { el.classList.add("is-hidden"); st.on = false; });
-  // modal abriu/fechou: o que estava embaixo do mouse mudou
-  document.addEventListener("figaros:layers", () => setLabel(""));
+  // a página rolou com o mouse parado (ou um modal abriu/fechou): o que está embaixo dele mudou
+  let refresh = 0;
+  const later = () => {
+    clearTimeout(refresh);
+    refresh = setTimeout(() => { if (st.on && cur?.el === el) sync(document.elementFromPoint(st.x, st.y)); }, 90);
+  };
+  window.addEventListener("scroll", later, { passive: true });
+  document.addEventListener("figaros:layers", later);
 
   ticker.add((f) => {
-    if (!st.on) return false;
+    if (!st.on || cur?.el !== el) return false;
     const k = 1 - Math.exp(-16 * f.dt); // o anel vem atrás, com suavidade
     st.rx += (st.x - st.rx) * k;
     st.ry += (st.y - st.ry) * k;
@@ -87,7 +97,7 @@ function initSpotlight() {
   if (!finePointer()) return;
   let pending = null, lastEl = null;
   document.addEventListener("pointermove", (e) => {
-    if (e.pointerType !== "mouse" || motion.reduced) return;
+    if (e.pointerType === "touch" || motion.reduced) return;
     const el = e.target instanceof Element ? e.target.closest(SPOT) : null;
     if (lastEl && lastEl !== el) { lastEl.style.removeProperty("--sx"); lastEl.style.removeProperty("--sy"); }
     lastEl = el;

@@ -111,7 +111,8 @@ $("#cartDrawer").addEventListener("click", (e) => {
   if (b.dataset.edit) {
     const it = cart.items.find((x) => x.key === b.dataset.edit);
     closeLayer($("#cartLayer"), { silent: true });
-    setTimeout(() => openBuilderFn({ productId: it.productId, edit: it }), 220);
+    // ao salvar (ou desistir), volta para o carrinho — a pessoa estava revisando o pedido
+    setTimeout(() => openBuilderFn({ productId: it.productId, edit: it, onDone: openCart }), 220);
     return;
   }
   if (b.dataset.upsell) { cart.add({ productId: b.dataset.upsell, qty: 1 }); flyToCart(b.querySelector("img")?.src, b); toast("Bebida adicionada", "ok"); return; }

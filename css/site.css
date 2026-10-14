@@ -59,7 +59,13 @@ body {
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }
-body.no-scroll { overflow: hidden; }
+/* com modal/carrinho aberto a página de trás não rola. Precisa ser no <html>: o "overflow-x: clip"
+   do futuro.css impede que o overflow do <body> trave a janela (a página de trás rolava junto).
+   (no <body> não: "hidden" mudava as margens e a página dava um pulinho ao abrir o carrinho) */
+html.no-scroll { overflow: hidden; }
+/* espaço da barra de rolagem sempre reservado: ao travar a rolagem a página não muda de largura
+   (as fontes em "vw" encolhiam e o conteúdo de trás pulava alguns pixels) */
+html { scrollbar-gutter: stable; }
 img { display: block; max-width: 100%; height: auto; }
 svg { fill: currentColor; }
 /* ícones da casa: só traço (a regra acima pintaria o desenho inteiro) */
@@ -187,6 +193,7 @@ p { text-wrap: pretty; }
 .mobile-nav { display: grid; padding: 8px 20px 18px; gap: 2px; background: var(--paper); border-top: 1px solid var(--line); animation: drop .3s var(--ease); }
 .mobile-nav a { padding: 14px 12px; border-radius: 12px; font-weight: 800; font-size: 18px; text-decoration: none; }
 .mobile-nav a:hover { background: var(--cream); }
+.mobile-theme { display: none; padding: 14px 12px; margin-top: 4px; border-top: 1px solid var(--line); border-radius: 0 0 12px 12px; font-weight: 800; font-size: 16px; text-align: left; color: var(--ink-2); }
 @keyframes drop { from { opacity: 0; transform: translateY(-8px); } }
 .tricolor { display: flex; height: 4px; }
 .tricolor i { flex: 1; }
@@ -592,11 +599,14 @@ html.js-marquee .marquee-track { animation: none; will-change: transform; }
 /* ============================================================
    CAMADAS: modais, gavetas, toasts
    ============================================================ */
-.layer { position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; padding: 16px; }
+/* grade com UMA célula do tamanho da tela: sem isso a célula crescia com o conteúdo — o carrinho ficava
+   mais alto que a tela (o "Finalizar pedido" sumia lá embaixo e a lista não rolava) e a fileira de
+   bebidas sugeridas alargava a célula, empurrando a gaveta para fora da tela */
+.layer { position: fixed; inset: 0; z-index: 100; display: grid; grid-template: minmax(0, 1fr) / minmax(0, 1fr); place-items: center; padding: 16px; }
 .layer-backdrop { position: absolute; inset: 0; background: rgba(26, 17, 13, .55); backdrop-filter: blur(3px); animation: fade .25s ease; }
 .layer.closing .layer-backdrop { animation: fade .22s ease reverse forwards; }
 @keyframes fade { from { opacity: 0; } }
-.dialog { position: relative; width: min(100%, 720px); max-height: min(92vh, 900px); display: flex; flex-direction: column; background: var(--paper); border-radius: 26px; box-shadow: var(--shadow-lg); overflow: hidden; animation: pop .38s var(--spring); }
+.dialog { position: relative; width: min(100%, 720px); max-height: min(92vh, 900px, 100%); display: flex; flex-direction: column; background: var(--paper); border-radius: 26px; box-shadow: var(--shadow-lg); overflow: hidden; animation: pop .38s var(--spring); }
 .layer.closing .dialog { animation: pop .2s ease reverse forwards; }
 @keyframes pop { from { opacity: 0; transform: translateY(24px) scale(.96); } }
 .dialog-scroll { overflow-y: auto; overscroll-behavior: contain; flex: 1; }
@@ -933,7 +943,8 @@ html.sdt .scroll-progress i { animation: progress linear both; animation-timelin
   .footer-grid { grid-template-columns: 1fr; }
   .footer-brand { grid-column: auto; }
   .layer { padding: 0; place-items: end stretch; }
-  .dialog { width: 100%; max-height: 94vh; border-radius: 24px 24px 0 0; animation: sheet .4s var(--ease); }
+  /* 100% - 24px: no celular "vh" conta a tela sem a barra do navegador — o topo (e o ×) ficava escondido */
+  .dialog { width: 100%; max-height: min(94vh, calc(100% - 24px)); border-radius: 24px 24px 0 0; animation: sheet .4s var(--ease); }
   .layer.closing .dialog { animation: sheet .25s ease reverse forwards; }
   @keyframes sheet { from { transform: translateY(100%); } }
   .drawer { width: 100%; }
@@ -943,8 +954,21 @@ html.sdt .scroll-progress i { animation: progress linear both; animation-timelin
   .pd-body, .ck-body { padding-left: 16px; padding-right: 16px; }
   .form-grid .c2, .form-grid .c3, .form-grid .c4 { grid-column: span 6; }
   .form-grid .c2.keep { grid-column: span 2; }
+  .form-grid .c2.keep .input { padding-inline: 10px; } /* CEP "88130-000" cabia cortado */
   .form-grid .c4.keep { grid-column: span 4; }
 }
+/* celular estreito: logo + status + pedidos + carrinho + menu não cabiam (o ☰ saía da tela,
+   principalmente depois do 1º pedido, quando aparece "Meus pedidos"). O tema vai para o menu. */
+@media (max-width: 480px) {
+  .header-inner { gap: 10px; }
+  .brand { gap: 8px; }
+  .brand img { width: 40px; height: 40px; }
+  .header-actions .theme-btn { display: none; }
+  .header-actions .icon-btn { width: 40px; }
+  .cart-btn { gap: 6px; padding: 0 4px 0 10px; }
+  .mobile-theme { display: block; }
+}
+@media (max-width: 350px) { .brand-text { display: none; } }
 @media (min-width: 641px) { .floating-cart { display: none !important; } }
 
 @media (prefers-reduced-motion: reduce) {

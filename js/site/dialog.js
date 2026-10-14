@@ -15,6 +15,7 @@ export function openLayer(layer, { onClose, initialFocus } = {}) {
   layer.hidden = false;
   layer.classList.remove("closing");
   document.body.classList.add("no-scroll");
+  document.documentElement.classList.add("no-scroll");
   announce();
   requestAnimationFrame(() => {
     const target = (initialFocus && layer.querySelector(initialFocus)) || layer.querySelector(".dialog-close, .drawer-head button") || layer.querySelector(FOCUSABLE);
@@ -32,7 +33,7 @@ export function closeLayer(layer, { silent = false } = {}) {
     if (!silent) entry.onClose?.();
     if (reopening) return;
     layer.hidden = true;
-    if (!stack.length) { document.body.classList.remove("no-scroll"); announce(); }
+    if (!stack.length) { document.body.classList.remove("no-scroll"); document.documentElement.classList.remove("no-scroll"); announce(); }
     if (entry.returnTo && document.contains(entry.returnTo)) entry.returnTo.focus?.({ preventScroll: true });
   };
   if (reducedMotion()) return finish();

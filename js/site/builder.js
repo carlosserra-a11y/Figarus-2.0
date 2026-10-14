@@ -18,8 +18,9 @@ let onAdd = null;
 export function initBuilder(menuIndex, { onAdded }) { idx = menuIndex; onAdd = onAdded; }
 export function setBuilderIndex(menuIndex) { idx = menuIndex; }
 
-/** Abre o montador. `preset` pode trazer flavorId/sizeId, ou um item do carrinho para editar. */
-export function openBuilder({ productId, flavorId, sizeId, edit } = {}) {
+/** Abre o montador. `preset` pode trazer flavorId/sizeId, ou um item do carrinho para editar.
+ *  `onDone` roda quando o montador fecha (salvando ou não) — ex.: voltar para o carrinho. */
+export function openBuilder({ productId, flavorId, sizeId, edit, onDone } = {}) {
   const product = idx.products.get(productId);
   if (!product) { toast("Esse item não está mais disponível.", "err"); return; }
   S = {
@@ -51,7 +52,7 @@ export function openBuilder({ productId, flavorId, sizeId, edit } = {}) {
   if (edit) Object.assign(S, structuredClone({ sizeId: edit.sizeId || S.sizeId, flavorIds: edit.flavorIds || [], addons: edit.addons || S.addons, units: edit.units || {}, parts: edit.parts || S.parts, drinks: edit.drinks || S.drinks, qty: edit.qty || 1, notes: edit.notes || "" }), { editKey: edit.key });
   const session = S;
   render();
-  openLayer(layer(), { onClose: () => { if (S === session) S = null; } });
+  openLayer(layer(), { onClose: () => { if (S === session) S = null; onDone?.(); } });
 }
 
 function selection() {

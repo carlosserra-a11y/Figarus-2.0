@@ -17,6 +17,7 @@ function apply(theme, { save = false } = {}) {
     btn.setAttribute("aria-label", theme === "dark" ? "Usar tema claro" : "Usar tema escuro");
     btn.title = theme === "dark" ? "Tema claro" : "Tema escuro";
   }
+  document.querySelectorAll("[data-theme-toggle] .t").forEach((t) => { t.textContent = theme === "dark" ? "Usar tema claro" : "Usar tema escuro"; });
   document.querySelector('meta[name="theme-color"]')?.setAttribute("content", COLORS[theme]);
   if (save) { try { localStorage.setItem("fg-theme", theme); } catch { /* sem armazenamento */ } }
   document.dispatchEvent(new CustomEvent("figaros:theme", { detail: { theme } }));
@@ -24,8 +25,8 @@ function apply(theme, { save = false } = {}) {
 
 export function initTheme() {
   apply(root.dataset.theme === "light" ? "light" : "dark");
-  const btn = document.getElementById("themeBtn");
-  btn?.addEventListener("click", () => {
+  // botão do topo e o do menu do celular
+  document.querySelectorAll("#themeBtn, [data-theme-toggle]").forEach((btn) => btn.addEventListener("click", () => {
     const next = root.dataset.theme === "dark" ? "light" : "dark";
     if (!document.startViewTransition || motion.reduced) return apply(next, { save: true });
     const r = btn.getBoundingClientRect();
@@ -34,5 +35,5 @@ export function initTheme() {
     root.classList.add("theme-vt");
     const vt = document.startViewTransition(() => apply(next, { save: true }));
     vt.finished.finally(() => root.classList.remove("theme-vt"));
-  });
+  }));
 }

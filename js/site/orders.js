@@ -1,7 +1,8 @@
 /* "Meus pedidos": histórico neste aparelho + acompanhamento em tempo real + pedir de novo. */
 import { html, $, setHTML, brlC, storage, timeAgo, fmtDateTime } from "./util.js";
 import { state as apiState, getOrder, getStatuses } from "./api.js";
-import { openLayer, isOpen } from "./dialog.js";
+import { openLayer, closeLayer, isOpen } from "./dialog.js";
+import { openCart } from "./checkout.js";
 import { cart } from "./cart.js";
 import { ORDER_STATUS } from "../shared/pricing.js";
 import { toast } from "./fx.js";
@@ -135,5 +136,7 @@ $("#ordersDrawer").addEventListener("click", (e) => {
       if (p && p.ok) { cart.add(sel); ok++; } else fail++;
     }
     toast(fail ? `${ok} item(ns) adicionados — ${fail} não estão mais disponíveis.` : "Itens adicionados ao carrinho!", fail ? "" : "ok", 3600);
+    // já mostra o carrinho com os itens (antes a pessoa ficava na gaveta sem ver o que entrou)
+    if (ok) { closeLayer($("#ordersLayer"), { silent: true }); clearInterval(pollTimer); viewing = null; setTimeout(openCart, 220); }
   }
 });

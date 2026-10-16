@@ -9,18 +9,22 @@ Tudo está em **um único arquivo**: [`index.html`](index.html). Não precisa in
 | --- | --- |
 | `index.html` | A landing page completa (HTML, CSS e JavaScript juntos) |
 | `PROMPT.md` | O prompt profissional usado para criar a página, para reusar em qualquer IA |
+| `IDENTIDADE.md` | Guia da identidade visual: paleta, fontes, grafismos e movimento |
 | `README.md` | Este guia |
 
 ## O que tem na página
 
-- **Hero** com selo de disponibilidade, números reais e o ensō que **gira com a rolagem**.
-- **Resumo de 30 segundos** para recrutadores (quem sou, o que entrego, stack, o que procuro).
-- **4 estudos de caso** (Figaro's 2.0, Smartech 3.0, São Cristóvão 3.0, Ingrid Lima) com rolagem horizontal.
-- **Arquivo com os 19 repositórios**, filtros, busca e links "Ao vivo" (GitHub Pages) e "Código".
-  Quando o site estiver no ar, ele busca sozinho repositórios novos na API do GitHub e marca como **NOVO**.
-- **Trajetória** de agosto a outubro de 2026, **habilidades com prova** (cada uma aponta para um projeto),
-  **método de trabalho**, **formação** (ADS · FMP · 2ª fase) e **contato**.
-- **Modo Bankai**: clique no botão "Bankai" ou aperte a tecla **B**.
+- **Hero como pôster** com paralaxe de 6 camadas (céu, lua, cidade do Wandenreich, névoa, tinta),
+  ensō que **gira com a rolagem** e coluna japonesa com selo vermelho.
+- **Ficha de recrutador**: resumo de 30 segundos em forma de ficha de identificação.
+- **Os 5 melhores repositórios como página de mangá** (lida da direita para a esquerda), cada um
+  com **estudo de caso** em janela: contexto, o que construí, decisões técnicas e stack.
+- **Arquivo com os 19 repositórios**, barra de linguagens, filtros, busca e links "Ao vivo" e "Código".
+  Com o site no ar, ele busca sozinho os repositórios novos na API do GitHub e marca como **NOVO**.
+- **Trajetória**, **habilidades com prova**, **método**, **formação** (ADS · FMP · 2ª fase) e **contato**.
+- **Modo Bankai**: botão "Bankai" ou tecla **B**.
+- Interações: cursor de reiatsu, botões magnéticos, cartões com inclinação 3D, títulos em katakana,
+  rolagem suave.
 - Acessível (teclado, "reduzir movimento", leitor de tela), responsivo e com SEO (Open Graph + JSON-LD).
 
 ## 1. Abrir no seu computador (área de trabalho)
@@ -40,6 +44,7 @@ const CONFIG = {
   linkedin: "",     // ex.: "https://www.linkedin.com/in/seu-perfil"
   whatsapp: "",     // só números com DDI e DDD, ex.: "5548999999999"
   curriculo: "",    // link do PDF do currículo (Google Drive, GitHub…)
+  foto: "",         // ex.: "foto.jpg" (na mesma pasta) → entra na ficha no lugar do "CS"
   buscarRepos: true
 };
 ```
@@ -57,15 +62,17 @@ O melhor endereço é **https://carlosserra-a11y.github.io/** (sem nada depois d
 
 ## 4. Editar projetos
 
-- **Estudos de caso:** procure `const CASES` no `index.html`.
+- **Estudos de caso (quadros do mangá):** procure `const CASES` no `index.html`.
+  `ctx` é o contexto, `did` o que você construiu e `dec` as decisões técnicas.
 - **Lista completa:** procure `const REPOS`. Cada linha é um repositório
   (`c` é a categoria: `sistema`, `negocio`, `fmp` ou `inicio`).
 
 ## Checklist antes de mandar para empresas
 
 - [ ] Preencher `email` e `linkedin` no `CONFIG`
+- [ ] Colocar uma foto profissional (`foto` no `CONFIG`)
 - [ ] Conferir se o nome "Carlos Serra" está certo (e o sobrenome completo, se quiser)
 - [ ] Publicar no GitHub Pages e testar no celular
 - [ ] Colocar uma descrição em cada repositório do GitHub (os que estão sem descrição perdem pontos)
-- [ ] Fixar os 4 projetos em destaque no seu perfil do GitHub (**Customize your pins**)
+- [ ] Fixar os 5 projetos em destaque no seu perfil do GitHub (**Customize your pins**)
 - [ ] Criar o README de perfil (repositório `carlosserra-a11y/carlosserra-a11y`) com o link do portfólio

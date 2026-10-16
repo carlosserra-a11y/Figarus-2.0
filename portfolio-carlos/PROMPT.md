@@ -20,39 +20,46 @@ PÚBLICO
 2. Tech leads (abrem o código, olham testes, arquitetura e qualidade).
 3. Pequenos negócios da Grande Florianópolis (querem ver sites que funcionam).
 
-DIREÇÃO VISUAL — inspirada em "Bleach: Thousand-Year Blood War" (temporada atual)
-- Visual escuro de propósito: tinta sumi (#0a0a0c), papel de arroz (#ece9e2), vermelho do Bankai
-  (#e3132f) e azul-branco das partículas Quincy (#b5d0ff) usado com moderação.
-- Cartões de título como os da abertura do anime: kanji grande em pincel na vertical, à esquerda de
-  cada seção, com um corte vermelho atravessando o título.
-- Tipografia: Shippori Mincho B1 (títulos), Yuji Syuku (kanji em pincel), Zen Kaku Gothic New (texto),
-  IBM Plex Mono (rótulos e números).
-- Cada kanji tem significado real ligado à seção: 斬 (corte, hero), 要 (essencial, resumo),
-  記録 (registro, destaques), 書庫 (arquivo, todos os projetos), 道 (caminho, trajetória),
-  技 (técnica, habilidades), 型 (forma, método), 学 (estudo, formação), 縁 (laço, contato).
-- Não usar logos, personagens nem imagens oficiais do anime. Rodapé com aviso de fan art sem vínculo.
+DIREÇÃO VISUAL — identidade de "Bleach: Thousand-Year Blood War" (detalhes em IDENTIDADE.md)
+- Dois lados. Quincy (padrão): azul-noite #0b0e1c, branco frio #eef2fb, aço #a3b4d8, contorno magenta
+  #ff3b5c. Shinigami (modo Bankai): preto #05060a e vermelho #e3132f. Proporção 70/20/10.
+- Hero como pôster: cena em 6 camadas com paralaxe (céu com faixa vermelha no horizonte, lua com
+  ensō e texto em órbita, cidade de torres do Wandenreich ao longe, cidade próxima, névoa, tinta preta),
+  nome gigante em caixa alta com um corte vermelho e coluna de texto japonês vertical com selo vermelho:
+  「千年の時を超え、コードで斬る。」
+- Projetos em destaque como uma página de mangá em papel (#f2efe6) e tinta (#0b0b0d): quadros com bordas
+  inclinadas, lidos da direita para a esquerda, retícula, linhas de velocidade e balão de fala.
+- Tipografia: Big Shoulders Display 900 (títulos), Shippori Mincho B1 (subtítulos e japonês),
+  Yuji Syuku (kanji em pincel), Zen Kaku Gothic New (texto), IBM Plex Mono (rótulos).
+- Cada seção abre com um kanji de significado real: 斬 corte, 要 essencial, 記録 registro, 書庫 arquivo,
+  道 caminho, 技 técnica, 型 forma, 学 estudo, 縁 laço.
+- Nenhuma imagem, logo ou personagem oficial do anime: tudo desenhado em código. Rodapé com aviso de
+  fan art sem vínculo.
 
-ANIMAÇÕES (GSAP 3 + ScrollTrigger)
-- Abertura: um corte vermelho atravessa a tela e o nome sobe linha por linha.
-- "O giro": um ensō (círculo de tinta) com texto em órbita gira conforme a rolagem da página inteira.
-- Partículas de reishi em canvas que sobem, aceleram com a rolagem e fogem do cursor.
-- Projetos em destaque com rolagem horizontal presa na tela no computador; empilhados no celular.
-- Linha do tempo com uma lâmina vermelha que desce junto com a rolagem.
-- Easter egg "Modo Bankai" (botão e tecla B): a página fica vermelha e as partículas aceleram.
-- Tudo começa visível: as animações só refinam. Sem JavaScript, sem GSAP ou com
-  "prefers-reduced-motion", a página fica completa e parada.
+ANIMAÇÕES E INTERAÇÕES (GSAP 3 + ScrollTrigger + Lenis)
+- Abertura: a tela se parte num corte vermelho e o nome sobe linha por linha.
+- Paralaxe do hero com a rolagem e com o mouse; o ensō e o texto em órbita giram com a rolagem.
+- "Licht Regen": flechas de luz caindo na diagonal em canvas, que aceleram com a rolagem.
+- Modo Bankai (botão e tecla B): clarão vermelho com 卍解, tremida, paleta vermelha e reiatsu subindo.
+- Títulos que se decodificam em katakana; quadros do mangá "entintados" ao entrar; balão que salta.
+- Cursor de reiatsu, botões magnéticos, cartões com inclinação 3D e brilho, linha do tempo com lâmina.
+- Estudo de caso em diálogo (contexto, o que construí, decisões técnicas, stack, links).
+- Tudo começa visível. Sem JavaScript, sem as bibliotecas ou com "prefers-reduced-motion", a página
+  fica completa e parada.
 
 SEÇÕES, NESTA ORDEM
 1. Hero: selo "Disponível para estágio ou vaga júnior", nome grande, uma frase do que ele entrega,
    botões "Ver projetos", "Falar comigo" e "GitHub", e três números reais
    (19 repositórios, 47 dias do primeiro commit ao primeiro sistema com banco de dados,
    15 arquivos de testes automatizados).
-2. Resumo de 30 segundos para recrutadores: quem sou, o que entrego, stack principal, o que procuro.
-3. Quatro estudos de caso no formato Problema → O que construí → Stack → links "Ver ao vivo" e "Código":
-   Figaro's Pizzaria 2.0 (Node, Express, SQLite, painel admin, 3D), Smartech 3.0 (three.js, Raio-X,
-   calculadora NBR 14518, Gemini), São Cristóvão 3.0 (React 19, TypeScript, atendente de IA, LGPD,
-   10 arquivos de teste) e Ingrid Lima (olho realista feito só com shader WebGL).
-4. Arquivo com TODOS os repositórios do GitHub github.com/carlosserra-a11y, com filtros
+2. Resumo de 30 segundos para recrutadores em forma de ficha de identificação (nome, idade, função,
+   base, formação, status) + quem sou, o que entrego, stack principal, o que procuro.
+3. Os 5 melhores repositórios como quadros de mangá, cada um com botão "Estudo de caso":
+   Figaro's Pizzaria 2.0 (Node, Express, SQLite, painel admin, 3D), São Cristóvão 3.0 (React 19,
+   TypeScript, atendente de IA, LGPD, 10 arquivos de teste), Smartech 3.0 (three.js, Raio-X,
+   calculadora NBR 14518, Gemini), Ingrid Lima (olho realista feito só com shader WebGL) e
+   CS Store (Tailwind, showroom 3D, calculadora de troca).
+4. Barra com a linguagem principal por repositório e arquivo com TODOS os repositórios do GitHub github.com/carlosserra-a11y, com filtros
    (Sistemas completos, Sites para negócios, Faculdade, Primeiros passos), busca e links para o
    GitHub Pages. Quando publicado, buscar repositórios novos pela API do GitHub e marcar como "NOVO".
 5. Trajetória de agosto a outubro de 2026, do repositório "meu-primeiro-site" (descrição

@@ -1,0 +1,1025 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Carlos Serra · Portfólio</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Carlos Serra, desenvolvedor full stack júnior em Palhoça/SC. Sites e sistemas com React, TypeScript, Node.js, three.js e IA (Gemini). 19 projetos públicos no GitHub.">
+<meta name="author" content="Carlos Serra">
+<meta name="theme-color" content="#0a0a0c">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Carlos Serra · Desenvolvedor Full Stack Júnior">
+<meta property="og:description" content="Do primeiro 'hello world' a sistemas com banco de dados, 3D e IA em menos de 2 meses. Veja os 19 projetos.">
+<meta property="og:locale" content="pt_BR">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Shippori+Mincho+B1:wght@600;800&family=Yuji+Syuku&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Carlos Serra",
+  "jobTitle": "Desenvolvedor Full Stack Júnior",
+  "address": { "@type": "PostalAddress", "addressLocality": "Palhoça", "addressRegion": "SC", "addressCountry": "BR" },
+  "alumniOf": { "@type": "CollegeOrUniversity", "name": "FMP – Faculdade Municipal de Palhoça" },
+  "knowsAbout": ["JavaScript", "TypeScript", "React", "Node.js", "Express", "SQLite", "three.js", "WebGL", "GSAP", "Gemini API", "Acessibilidade web"],
+  "sameAs": ["https://github.com/carlosserra-a11y"]
+}
+</script>
+<style>
+/* Layout: cartões de título no ritmo do "Thousand-Year Blood War" — trilho vertical de kanji à esquerda,
+   corte vermelho separando cada capítulo, conteúdo em grade assimétrica. Visual escuro de propósito (um só tema). */
+:root{
+  --ink:#0a0a0c;        /* fundo: tinta sumi */
+  --ink-2:#131217;      /* superfícies elevadas */
+  --ink-3:#1b1a20;
+  --line:#2a2830;       /* fios e bordas */
+  --bone:#ece9e2;       /* texto principal: papel de arroz */
+  --ash:#9a96a0;        /* texto secundário */
+  --blood:#e3132f;      /* vermelho do Bankai */
+  --blood-deep:#8f0b1e;
+  --reishi:#b5d0ff;     /* azul-branco das partículas Quincy */
+
+  --f-display:"Shippori Mincho B1","Hiragino Mincho ProN","Yu Mincho",Georgia,serif;
+  --f-brush:"Yuji Syuku","Shippori Mincho B1","Yu Mincho",serif;
+  --f-body:"Zen Kaku Gothic New","Hiragino Sans","Segoe UI",system-ui,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+
+  --step--1:clamp(.8rem,.77rem + .15vw,.875rem);
+  --step-0:clamp(1rem,.96rem + .2vw,1.125rem);
+  --step-1:clamp(1.25rem,1.15rem + .5vw,1.6rem);
+  --step-2:clamp(1.6rem,1.35rem + 1.2vw,2.4rem);
+  --step-3:clamp(2.2rem,1.6rem + 3vw,4rem);
+  --step-4:clamp(3.2rem,2rem + 7vw,8.5rem);
+
+  --gutter:max(16px, env(safe-area-inset-left, 0px));
+  --gutter-r:max(16px, env(safe-area-inset-right, 0px));
+  --wrap:1240px;
+  --ease:cubic-bezier(.2,.8,.2,1);
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--ink);color:var(--bone);
+  font:400 var(--step-0)/1.65 var(--f-body);
+  overflow-x:hidden;-webkit-font-smoothing:antialiased;
+}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--ink)}
+img{max-width:100%}
+a{color:inherit}
+::selection{background:var(--blood);color:var(--bone)}
+:focus-visible{outline:2px solid var(--blood);outline-offset:3px;border-radius:2px}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.skip{position:absolute;left:var(--gutter);top:-60px;z-index:100;background:var(--blood);color:var(--bone);padding:.6rem 1rem;text-decoration:none;font-weight:700}
+.skip:focus{top:calc(env(safe-area-inset-top,0px) + 8px)}
+
+/* grão de papel + vinheta */
+.grain{position:fixed;inset:0;pointer-events:none;z-index:50;opacity:.07;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+#reishi{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+main,header,footer{position:relative;z-index:1}
+
+.wrap{max-width:var(--wrap);margin:0 auto;padding-left:var(--gutter);padding-right:var(--gutter-r)}
+.mono{font-family:var(--f-mono);font-size:var(--step--1);letter-spacing:.08em;text-transform:uppercase}
+.muted{color:var(--ash)}
+h1,h2,h3{font-family:var(--f-display);font-weight:800;line-height:1.05;margin:0;text-wrap:balance;letter-spacing:-.01em}
+p{margin:0}
+
+/* barra de progresso */
+.progress{position:fixed;left:0;right:0;top:env(safe-area-inset-top,0px);height:2px;z-index:70;background:transparent}
+.progress i{display:block;height:100%;background:var(--blood);transform-origin:0 50%;transform:scaleX(0);box-shadow:0 0 12px var(--blood)}
+
+/* ===== NAV ===== */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;
+  background:color-mix(in oklab,var(--ink) 82%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;align-items:center;gap:1.5rem;padding-block:.8rem}
+.brand{display:flex;align-items:center;gap:.6rem;text-decoration:none;font-family:var(--f-display);font-weight:800;letter-spacing:.02em}
+.brand b{font-family:var(--f-brush);font-weight:400;color:var(--blood);font-size:1.6rem;line-height:1}
+.nav ul{display:flex;gap:1.4rem;list-style:none;margin:0 0 0 auto;padding:0}
+.nav ul a{text-decoration:none;color:var(--ash);font-size:.92rem;transition:color .2s}
+.nav ul a:hover,.nav ul a[aria-current="true"]{color:var(--bone)}
+.nav ul a[aria-current="true"]{box-shadow:0 2px 0 var(--blood)}
+.bankai-btn{font:500 .75rem/1 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--bone);
+  background:transparent;border:1px solid var(--line);padding:.55rem .75rem;cursor:pointer;display:flex;gap:.45rem;align-items:center;transition:border-color .2s,background .2s}
+.bankai-btn span{font-family:var(--f-brush);font-size:1rem;letter-spacing:0;color:var(--blood)}
+.bankai-btn:hover{border-color:var(--blood)}
+.bankai-btn[aria-pressed="true"]{background:var(--blood);border-color:var(--blood)}
+.bankai-btn[aria-pressed="true"] span{color:var(--bone)}
+@media (max-width:820px){.nav ul{display:none}.bankai-btn{margin-left:auto}}
+
+/* ===== BOTÕES ===== */
+.btn{--b:var(--bone);display:inline-flex;align-items:center;gap:.6rem;padding:.95rem 1.4rem;font:700 .95rem/1 var(--f-body);
+  text-decoration:none;cursor:pointer;border:1px solid var(--b);color:var(--b);background:transparent;position:relative;overflow:hidden;
+  transition:color .25s var(--ease),border-color .25s}
+.btn::before{content:"";position:absolute;inset:0;background:var(--blood);transform:translateX(-125%) skewX(-18deg);transform-origin:left;transition:transform .45s var(--ease);z-index:-1}
+.btn:hover::before{transform:translateX(0) skewX(0)}
+.btn:hover{border-color:var(--blood);color:var(--bone)}
+.btn{isolation:isolate}
+.btn.primary{background:var(--blood);border-color:var(--blood);color:var(--bone)}
+.btn.primary::before{background:var(--bone)}
+.btn.primary:hover{color:var(--ink);border-color:var(--bone)}
+.btn svg{width:1em;height:1em;flex:none}
+
+/* ===== HERO ===== */
+.hero{position:relative;padding-block:clamp(3rem,8vw,7rem) clamp(3rem,6vw,5rem);overflow:hidden}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:2rem;align-items:center}
+.hero-copy{min-width:0;display:grid;gap:1.6rem}
+.status{display:inline-flex;align-items:center;gap:.6rem;font:500 var(--step--1)/1.3 var(--f-mono);letter-spacing:.06em;color:var(--bone);
+  border:1px solid var(--line);padding:.5rem .8rem;justify-self:start;background:var(--ink-2)}
+.status i{width:8px;height:8px;border-radius:50%;background:#3ddc84;box-shadow:0 0 0 0 #3ddc8466;animation:ping 2s infinite}
+@keyframes ping{70%{box-shadow:0 0 0 10px #3ddc8400}100%{box-shadow:0 0 0 0 #3ddc8400}}
+.hero h1{font-size:var(--step-4);line-height:.92;letter-spacing:-.025em}
+.hero h1 .line{display:block;overflow:hidden;padding-bottom:.06em}
+.hero h1 .line > span{display:inline-block}
+.hero h1 .red{color:var(--blood)}
+.slash{display:block;height:4px;width:min(340px,70%);background:var(--blood);transform-origin:left;transform:skewX(-30deg);box-shadow:0 0 18px var(--blood)}
+.lede{font-size:var(--step-1);line-height:1.45;max-width:34ch;color:var(--bone)}
+.lede em{font-style:normal;color:var(--reishi)}
+.ctas{display:flex;flex-wrap:wrap;gap:.8rem}
+.hero-meta{display:flex;flex-wrap:wrap;gap:1.4rem 2.2rem;padding-top:.6rem;border-top:1px solid var(--line)}
+.hero-meta div{display:grid;gap:.1rem}
+.hero-meta b{font:800 var(--step-2)/1 var(--f-display);font-variant-numeric:tabular-nums}
+.hero-meta span{font-size:.82rem;color:var(--ash);max-width:18ch;line-height:1.35}
+
+.sigil{position:relative;aspect-ratio:1;width:100%;max-width:520px;justify-self:center}
+.sigil svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.enso{transform-origin:50% 50%}
+.orbit{transform-origin:50% 50%;font:500 15px var(--f-mono);letter-spacing:.32em;fill:var(--ash);text-transform:uppercase}
+.sigil .kanji{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--f-brush);font-size:clamp(9rem,22vw,17rem);line-height:1;color:var(--bone);
+  text-shadow:0 0 40px rgba(227,19,47,.35)}
+.sigil .kanji span{display:block;transform:translateY(-.03em)}
+.vert{position:absolute;right:max(10px,env(safe-area-inset-right,0px));top:50%;transform:translateY(-50%);writing-mode:vertical-rl;
+  font-family:var(--f-display);font-weight:600;letter-spacing:.5em;color:var(--ash);font-size:.9rem;opacity:.8}
+.vert b{color:var(--blood);font-weight:600}
+@media (max-width:900px){
+  .hero .wrap{grid-template-columns:1fr}
+  .sigil{max-width:360px;order:-1;margin-bottom:-2rem}
+  .vert{display:none}
+}
+
+/* ===== MARQUEE ===== */
+.marquee{border-block:1px solid var(--line);background:var(--ink-2);overflow:hidden;white-space:nowrap;position:relative;z-index:1}
+.marquee .track{display:inline-flex;gap:2.5rem;padding-block:1rem;font:800 var(--step-1)/1 var(--f-display);animation:mq 38s linear infinite}
+.marquee .track span{display:inline-flex;align-items:center;gap:2.5rem}
+.marquee .track span::after{content:"斬";font-family:var(--f-brush);font-weight:400;color:var(--blood)}
+@keyframes mq{to{transform:translateX(-50%)}}
+
+/* ===== CAPÍTULO (cartão de título) ===== */
+section.chapter{padding-block:clamp(4.5rem,10vw,8rem)}
+.chap-head{display:grid;grid-template-columns:auto minmax(0,1fr);gap:clamp(1rem,3vw,2.5rem);align-items:end;margin-bottom:clamp(2rem,5vw,3.5rem)}
+.chap-kanji{font-family:var(--f-brush);font-size:clamp(4.5rem,11vw,9rem);line-height:.85;color:var(--blood);writing-mode:vertical-rl;letter-spacing:-.05em;
+  text-shadow:0 0 30px rgba(227,19,47,.25)}
+.chap-title{display:grid;gap:.9rem;min-width:0}
+.chap-title .mono{color:var(--ash)}
+.chap-title h2{font-size:var(--step-3)}
+.chap-title p{max-width:58ch;color:var(--ash)}
+.cut{height:1px;background:linear-gradient(90deg,var(--blood),var(--blood) 30%,var(--line) 30%);transform-origin:left;margin-top:.4rem}
+
+/* ===== RESUMO 30s ===== */
+.brief{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border:1px solid var(--line);background:color-mix(in oklab,var(--ink-2) 85%,transparent)}
+.brief article{padding:clamp(1.2rem,2.5vw,2rem);display:grid;gap:.7rem;align-content:start;border-right:1px solid var(--line);min-width:0}
+.brief article:last-child{border-right:0}
+.brief h3{font-size:var(--step-1)}
+.brief p,.brief li{color:var(--ash);font-size:.97rem}
+.brief ul{margin:0;padding:0;list-style:none;display:grid;gap:.35rem}
+.brief li::before{content:"— ";color:var(--blood)}
+.brief .mono{color:var(--blood)}
+@media (max-width:960px){.brief{grid-template-columns:repeat(2,minmax(0,1fr))}.brief article:nth-child(2){border-right:0}.brief article:nth-child(-n+2){border-bottom:1px solid var(--line)}}
+@media (max-width:560px){.brief{grid-template-columns:1fr}.brief article{border-right:0;border-bottom:1px solid var(--line)}.brief article:last-child{border-bottom:0}}
+
+.numbers{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin-top:2rem}
+.numbers div{background:var(--ink);padding:1.4rem clamp(1rem,2vw,1.6rem);display:grid;gap:.3rem}
+.numbers b{font:800 var(--step-3)/1 var(--f-display);font-variant-numeric:tabular-nums}
+.numbers b small{font-size:.45em;color:var(--blood);margin-left:.15em}
+.numbers span{color:var(--ash);font-size:.9rem;line-height:1.4}
+@media (max-width:760px){.numbers{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* ===== DESTAQUES (rolagem horizontal) ===== */
+.cases-pin{position:relative;overflow:hidden}
+.cases{display:flex;gap:clamp(1rem,2vw,1.5rem);overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:.5rem}
+.cases .case{scroll-snap-align:start}
+html.gsap-on .cases{overflow:visible;will-change:transform;padding-bottom:0}
+.case{flex:0 0 min(86vw,920px);display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);border:1px solid var(--line);background:var(--ink-2);min-height:min(68vh,560px);position:relative}
+.case-art{position:relative;overflow:hidden;border-right:1px solid var(--line);display:grid;place-items:center;
+  background:radial-gradient(120% 90% at 30% 20%,var(--tint,#3a0d16) 0%,transparent 60%),var(--ink)}
+.case-art .k{font-family:var(--f-brush);font-size:clamp(8rem,18vw,15rem);line-height:1;color:var(--bone);mix-blend-mode:screen;opacity:.92;position:relative;z-index:1}
+.case-art .ring{position:absolute;width:78%;aspect-ratio:1;border-radius:50%;border:1px dashed color-mix(in oklab,var(--bone) 25%,transparent)}
+.case-art .div{position:absolute;left:1rem;top:1rem;font:500 .72rem/1.4 var(--f-mono);letter-spacing:.14em;color:var(--ash);text-transform:uppercase}
+.case-art .div b{display:block;font-family:var(--f-display);font-size:1.6rem;letter-spacing:.1em;color:var(--blood)}
+.case-art .tag{position:absolute;right:1rem;bottom:1rem;font:500 .72rem var(--f-mono);letter-spacing:.12em;color:var(--ash);text-transform:uppercase}
+.case-body{padding:clamp(1.3rem,3vw,2.4rem);display:grid;gap:1.1rem;align-content:start;min-width:0}
+.case-body h3{font-size:var(--step-2)}
+.case-body .client{color:var(--reishi)}
+.case-body .prob{color:var(--ash)}
+.case-body ul{margin:0;padding:0;list-style:none;display:grid;gap:.5rem}
+.case-body li{padding-left:1.3rem;position:relative;font-size:.97rem}
+.case-body li::before{content:"";position:absolute;left:0;top:.72em;width:.7rem;height:2px;background:var(--blood);transform:skewX(-30deg)}
+.chips{display:flex;flex-wrap:wrap;gap:.4rem}
+.chip{font:500 .74rem/1 var(--f-mono);letter-spacing:.04em;padding:.42rem .55rem;border:1px solid var(--line);color:var(--bone);background:var(--ink)}
+.links{display:flex;flex-wrap:wrap;gap:1.2rem;margin-top:.3rem}
+.links a{font:700 .92rem/1 var(--f-body);text-decoration:none;display:inline-flex;gap:.4rem;align-items:center;border-bottom:1px solid var(--blood);padding-bottom:.25rem}
+.links a:hover{color:var(--blood)}
+.cases-progress{display:flex;align-items:center;gap:1rem;margin-top:1.4rem}
+.cases-progress .bar{flex:1;height:2px;background:var(--line);position:relative}
+.cases-progress .bar i{position:absolute;inset:0;background:var(--blood);transform-origin:left;transform:scaleX(.25)}
+.hint{font:500 .75rem var(--f-mono);letter-spacing:.1em;color:var(--ash);text-transform:uppercase}
+@media (max-width:899px){
+  .cases{flex-direction:column}
+  .case{flex-basis:auto;grid-template-columns:1fr;min-height:0}
+  .case-art{border-right:0;border-bottom:1px solid var(--line);min-height:220px}
+  .cases-progress{display:none}
+}
+
+/* ===== LINHA DO TEMPO ===== */
+.timeline{position:relative;display:grid;gap:0;padding-left:clamp(2rem,6vw,4rem)}
+.timeline::before{content:"";position:absolute;left:clamp(.55rem,2vw,1.3rem);top:0;bottom:0;width:1px;background:var(--line)}
+.tl-fill{position:absolute;left:clamp(.55rem,2vw,1.3rem);top:0;bottom:0;width:2px;margin-left:-.5px;background:var(--blood);transform-origin:top;transform:scaleY(1);box-shadow:0 0 14px var(--blood)}
+.tl-item{position:relative;display:grid;grid-template-columns:9.5rem minmax(0,1fr);gap:1.4rem;padding-block:1.3rem;border-bottom:1px dashed var(--line)}
+.tl-item:last-child{border-bottom:0}
+.tl-item::before{content:"";position:absolute;left:calc(-1 * clamp(2rem,6vw,4rem) + clamp(.55rem,2vw,1.3rem) - 5px);top:1.75rem;width:11px;height:11px;background:var(--ink);border:2px solid var(--blood);transform:rotate(45deg)}
+.tl-item time{font:500 .82rem/1.5 var(--f-mono);letter-spacing:.06em;color:var(--blood);padding-top:.2rem}
+.tl-item h3{font-size:var(--step-1);margin-bottom:.3rem}
+.tl-item p{color:var(--ash);max-width:62ch}
+.tl-item q{color:var(--reishi);font-style:italic}
+@media (max-width:600px){.tl-item{grid-template-columns:1fr;gap:.3rem}}
+
+/* ===== ARQUIVO ===== */
+.toolbar{display:flex;flex-wrap:wrap;gap:.6rem 1rem;align-items:center;margin-bottom:1.4rem}
+.filters{display:flex;flex-wrap:wrap;gap:.4rem}
+.filters button{font:500 .8rem/1 var(--f-mono);letter-spacing:.06em;text-transform:uppercase;padding:.6rem .8rem;color:var(--ash);background:transparent;border:1px solid var(--line);cursor:pointer;transition:all .2s}
+.filters button:hover{color:var(--bone);border-color:var(--ash)}
+.filters button[aria-pressed="true"]{color:var(--bone);background:var(--blood);border-color:var(--blood)}
+.filters button small{opacity:.7;margin-left:.3rem}
+.search{margin-left:auto;display:flex;align-items:center;gap:.5rem;border:1px solid var(--line);padding:0 .8rem;background:var(--ink-2);min-width:0;flex:0 1 280px}
+.search input{background:transparent;border:0;color:var(--bone);font:400 .95rem var(--f-body);padding:.65rem 0;width:100%;min-width:0;outline:none}
+.search:focus-within{border-color:var(--blood)}
+.search svg{width:16px;height:16px;color:var(--ash);flex:none}
+@media (max-width:640px){.search{margin-left:0;flex-basis:100%}}
+.registry{border-top:1px solid var(--line)}
+.row{display:grid;grid-template-columns:6.2rem minmax(0,1.4fr) minmax(0,2fr) 7.5rem auto;gap:1rem;align-items:center;padding:1.05rem .4rem;border-bottom:1px solid var(--line);position:relative;transition:background .25s}
+.row::after{content:"";position:absolute;left:0;bottom:-1px;height:1px;width:100%;background:var(--blood);transform:scaleX(0);transform-origin:left;transition:transform .5s var(--ease)}
+.row:hover{background:color-mix(in oklab,var(--ink-2) 80%,transparent)}
+.row:hover::after{transform:scaleX(1)}
+.row time{font:400 .78rem var(--f-mono);color:var(--ash);font-variant-numeric:tabular-nums}
+.row h3{font:700 1.02rem/1.3 var(--f-body);letter-spacing:0}
+.row h3 small{display:block;font:400 .74rem/1.3 var(--f-mono);color:var(--ash);margin-top:.2rem;word-break:break-all}
+.row p{color:var(--ash);font-size:.92rem;line-height:1.5}
+.row .lang{font:500 .74rem var(--f-mono);display:flex;align-items:center;gap:.45rem}
+.row .lang i{width:9px;height:9px;border-radius:50%;background:var(--c,#888);flex:none}
+.row .acts{display:flex;gap:.9rem;justify-content:flex-end}
+.row .acts a{font:700 .82rem/1 var(--f-body);text-decoration:none;color:var(--bone);white-space:nowrap;border-bottom:1px solid var(--line);padding-bottom:.2rem}
+.row .acts a:hover{color:var(--blood);border-color:var(--blood)}
+.row .new{font:500 .65rem var(--f-mono);color:var(--ink);background:var(--reishi);padding:.15rem .35rem;margin-left:.4rem;vertical-align:middle;letter-spacing:.08em}
+@media (max-width:900px){
+  .row{grid-template-columns:minmax(0,1fr) auto;gap:.4rem 1rem}
+  .row time{grid-column:1/-1;order:-1}
+  .row p{grid-column:1/-1}
+  .row .lang{grid-column:1}
+  .row .acts{grid-column:2;grid-row:2}
+}
+.empty{padding:2rem .4rem;color:var(--ash)}
+.archive-note{margin-top:1rem;font-size:.85rem;color:var(--ash)}
+
+/* ===== ARSENAL ===== */
+.arsenal{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,270px),1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
+.arm{background:var(--ink);padding:1.6rem;display:grid;gap:1rem;align-content:start;position:relative;overflow:hidden;transition:background .3s}
+.arm:hover{background:var(--ink-2)}
+.arm .k{position:absolute;right:-.1em;top:-.15em;font-family:var(--f-brush);font-size:6.5rem;line-height:1;color:var(--bone);opacity:.06;pointer-events:none}
+.arm h3{font-size:var(--step-1)}
+.arm dl{margin:0;display:grid;gap:.55rem}
+.arm dt{font-weight:700;font-size:.97rem}
+.arm dd{margin:0 0 .3rem;color:var(--ash);font-size:.86rem;line-height:1.45}
+.arm dd a{color:var(--reishi);text-decoration:none;border-bottom:1px dotted var(--reishi)}
+
+/* ===== MÉTODO ===== */
+.steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(1rem,2vw,1.6rem);counter-reset:s}
+.step{border-top:2px solid var(--line);padding-top:1.2rem;display:grid;gap:.6rem;position:relative}
+.step::before{counter-increment:s;content:"0" counter(s);font:500 .8rem var(--f-mono);color:var(--blood);letter-spacing:.1em}
+.step h3{font-size:var(--step-1)}
+.step p{color:var(--ash);font-size:.95rem}
+.step .bar{position:absolute;left:0;top:-2px;height:2px;width:100%;background:var(--blood);transform-origin:left}
+@media (max-width:900px){.steps{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){.steps{grid-template-columns:1fr}}
+
+/* ===== FORMAÇÃO ===== */
+.edu{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:clamp(1.5rem,4vw,3rem);align-items:start}
+.edu-card{border:1px solid var(--line);background:var(--ink-2);padding:clamp(1.4rem,3vw,2.2rem);display:grid;gap:1rem}
+.edu-card h3{font-size:var(--step-2)}
+.meter{display:grid;gap:.5rem}
+.meter .track{height:6px;background:var(--ink);border:1px solid var(--line);position:relative}
+.meter .track i{position:absolute;inset:0 auto 0 0;width:40%;background:var(--blood)}
+.meter span{font:400 .8rem var(--f-mono);color:var(--ash)}
+.learning{display:grid;gap:.8rem}
+.learning li{color:var(--ash)}
+.learning ul{margin:0;padding-left:1.1rem;display:grid;gap:.45rem}
+.learning li::marker{color:var(--blood)}
+@media (max-width:820px){.edu{grid-template-columns:1fr}}
+
+/* ===== CONTATO ===== */
+.contact{position:relative;overflow:hidden;border-top:1px solid var(--line);background:
+  radial-gradient(80% 120% at 85% 10%,rgba(227,19,47,.22),transparent 60%),var(--ink)}
+.contact .wrap{padding-block:clamp(5rem,12vw,9rem);display:grid;gap:2rem;position:relative}
+.contact .big-k{position:absolute;right:var(--gutter-r);bottom:-.15em;font-family:var(--f-brush);font-size:clamp(12rem,35vw,30rem);line-height:1;color:var(--blood);opacity:.12;pointer-events:none}
+.contact h2{font-size:var(--step-4);line-height:.95;max-width:12ch}
+.contact p{max-width:52ch;color:var(--ash);font-size:var(--step-1);line-height:1.5}
+.copy-row{display:flex;flex-wrap:wrap;gap:.8rem;align-items:center}
+.copy-out{font:500 .85rem var(--f-mono);color:var(--reishi);min-height:1.2em}
+.contact-list{display:flex;flex-wrap:wrap;gap:1.4rem 2.4rem;padding-top:1.4rem;border-top:1px solid var(--line)}
+.contact-list div{display:grid;gap:.2rem}
+.contact-list span{font:500 .72rem var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--ash)}
+.contact-list b,.contact-list a{font-weight:700;text-decoration:none;user-select:all}
+.contact-list a:hover{color:var(--blood)}
+
+footer{border-top:1px solid var(--line);background:var(--ink)}
+footer .wrap{display:flex;flex-wrap:wrap;gap:1rem 2rem;justify-content:space-between;padding-block:1.6rem calc(1.6rem + env(safe-area-inset-bottom,0px));font-size:.82rem;color:var(--ash)}
+
+/* ===== MODO BANKAI ===== */
+html.bankai{--ash:#b5a9ac;--line:#3a1a20;--reishi:#ff8a98}
+html.bankai body{background:radial-gradient(120% 80% at 50% 0%,#1d0509,var(--ink) 60%) fixed,var(--ink)}
+html.bankai .sigil .kanji{color:var(--blood);text-shadow:0 0 60px rgba(227,19,47,.8)}
+.flash{position:fixed;inset:0;z-index:80;pointer-events:none;background:var(--blood);opacity:0}
+.flash::after{content:"卍解";position:absolute;inset:0;display:grid;place-items:center;font-family:var(--f-brush);font-size:clamp(6rem,25vw,18rem);color:var(--ink)}
+
+/* ===== INTRO (corte de abertura) ===== */
+.intro-cut{position:fixed;left:-10%;right:-10%;top:50%;height:3px;background:var(--blood);z-index:90;pointer-events:none;transform:scaleX(0) rotate(-14deg);box-shadow:0 0 30px var(--blood);opacity:0}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+  #reishi{display:none}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#conteudo">Pular para o conteúdo</a>
+<div class="progress" aria-hidden="true"><i id="progress"></i></div>
+<canvas id="reishi" aria-hidden="true"></canvas>
+<div class="grain" aria-hidden="true"></div>
+<div class="flash" id="flash" aria-hidden="true"></div>
+<div class="intro-cut" id="introCut" aria-hidden="true"></div>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="#topo"><b>斬</b> Carlos Serra</a>
+    <nav aria-label="Seções">
+      <ul>
+        <li><a href="#resumo">Resumo</a></li>
+        <li><a href="#destaques">Destaques</a></li>
+        <li><a href="#arquivo">Projetos</a></li>
+        <li><a href="#trajetoria">Trajetória</a></li>
+        <li><a href="#arsenal">Habilidades</a></li>
+        <li><a href="#contato">Contato</a></li>
+      </ul>
+    </nav>
+    <button class="bankai-btn" id="bankai" type="button" aria-pressed="false" title="Atalho: tecla B"><span>解</span>Bankai</button>
+  </div>
+</header>
+
+<main id="conteudo">
+  <!-- ========== HERO ========== -->
+  <section class="hero" id="topo" aria-labelledby="h-nome">
+    <div class="wrap">
+      <div class="hero-copy">
+        <p class="status"><i aria-hidden="true"></i>Disponível para estágio ou vaga júnior</p>
+        <p class="mono muted">Desenvolvedor Full Stack Júnior · Palhoça/SC</p>
+        <h1 id="h-nome"><span class="line"><span>Carlos</span></span><span class="line"><span class="red">Serra</span></span></h1>
+        <span class="slash" aria-hidden="true"></span>
+        <p class="lede">Crio sites e sistemas para negócios reais: cardápios com pedido, <em>painel com banco de dados</em>, showrooms em 3D e atendentes com IA.</p>
+        <div class="ctas">
+          <a class="btn primary" href="#destaques">Ver projetos
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
+          <a class="btn" href="#contato">Falar comigo</a>
+          <a class="btn" href="https://github.com/carlosserra-a11y" target="_blank" rel="noopener">GitHub
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+        </div>
+        <div class="hero-meta">
+          <div><b data-count="19">19</b><span>repositórios públicos no GitHub</span></div>
+          <div><b data-count="47">47</b><span>dias do 1º “hello world” ao 1º sistema com banco de dados</span></div>
+          <div><b data-count="15">15</b><span>arquivos de testes automatizados</span></div>
+        </div>
+      </div>
+
+      <div class="sigil" aria-hidden="true">
+        <svg viewBox="0 0 500 500">
+          <defs>
+            <filter id="brush" x="-10%" y="-10%" width="120%" height="120%">
+              <feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="7" result="t"/>
+              <feDisplacementMap in="SourceGraphic" in2="t" scale="9"/>
+            </filter>
+            <path id="orbitPath" d="M250,250 m-218,0 a218,218 0 1,1 436,0 a218,218 0 1,1 -436,0"/>
+          </defs>
+          <g class="enso" id="enso">
+            <circle cx="250" cy="250" r="185" fill="none" stroke="#ece9e2" stroke-width="16" stroke-linecap="round"
+              stroke-dasharray="1040 200" filter="url(#brush)" opacity=".92"/>
+            <circle cx="250" cy="250" r="185" fill="none" stroke="#e3132f" stroke-width="4" stroke-dasharray="120 1042" stroke-dashoffset="-1050" filter="url(#brush)"/>
+          </g>
+          <g class="orbit" id="orbit">
+            <text><textPath href="#orbitPath">Carlos Serra · Full Stack · Palhoça SC · React · Node · three.js · Gemini IA ·</textPath></text>
+          </g>
+          <g id="ticks" stroke="#2a2830" stroke-width="1">
+            <circle cx="250" cy="250" r="240" fill="none"/>
+          </g>
+        </svg>
+        <div class="kanji"><span id="heroKanji">斬</span></div>
+      </div>
+    </div>
+    <p class="vert">千年血戦 · <b>開発者</b> · カルロス</p>
+  </section>
+
+  <div class="marquee" aria-hidden="true">
+    <div class="track">
+      <span>JavaScript</span><span>TypeScript</span><span>React 19</span><span>Node.js</span><span>Express</span><span>SQLite</span><span>three.js</span><span>WebGL</span><span>GSAP</span><span>Gemini IA</span><span>Tailwind</span><span>Acessibilidade</span>
+      <span>JavaScript</span><span>TypeScript</span><span>React 19</span><span>Node.js</span><span>Express</span><span>SQLite</span><span>three.js</span><span>WebGL</span><span>GSAP</span><span>Gemini IA</span><span>Tailwind</span><span>Acessibilidade</span>
+    </div>
+  </div>
+
+  <!-- ========== RESUMO ========== -->
+  <section class="chapter" id="resumo" aria-labelledby="h-resumo">
+    <div class="wrap">
+      <div class="chap-head">
+        <div class="chap-kanji" aria-hidden="true">要</div>
+        <div class="chap-title">
+          <p class="mono">Para recrutadores · leitura de 30 segundos</p>
+          <h2 id="h-resumo">O essencial, antes de tudo</h2>
+          <div class="cut" aria-hidden="true"></div>
+        </div>
+      </div>
+
+      <div class="brief">
+        <article>
+          <p class="mono">Quem sou</p>
+          <h3>Carlos, 24 anos</h3>
+          <p>Estudante de Análise e Desenvolvimento de Sistemas na FMP (2ª fase), em Palhoça/SC. Comecei a programar em agosto de 2026 e publico tudo o que faço.</p>
+        </article>
+        <article>
+          <p class="mono">O que entrego</p>
+          <h3>Projetos completos</h3>
+          <ul>
+            <li>Front-end responsivo e acessível</li>
+            <li>API em Node.js + Express</li>
+            <li>Banco de dados e painel admin</li>
+            <li>3D, animação e IA quando ajudam o negócio</li>
+          </ul>
+        </article>
+        <article>
+          <p class="mono">Stack principal</p>
+          <h3>JS · TS · React · Node</h3>
+          <p>React 19, Vite, Tailwind 4, Express, SQLite, three.js, GSAP e Google Gemini. Testes com <code>node:test</code>.</p>
+        </article>
+        <article>
+          <p class="mono">O que procuro</p>
+          <h3>Estágio ou júnior</h3>
+          <p>Time onde eu possa entregar desde a primeira semana, receber code review e crescer em front-end ou full stack. Presencial, híbrido ou remoto.</p>
+        </article>
+      </div>
+
+      <div class="numbers">
+        <div><b>5</b><span>negócios reais da Grande Florianópolis com site feito por mim</span></div>
+        <div><b>3</b><span>linguagens no GitHub: HTML, JavaScript e TypeScript</span></div>
+        <div><b>3<small>×</small></b><span>versões do mesmo site, cada uma melhor que a anterior (Smartech 1 → 3)</span></div>
+        <div><b>18</b><span>projetos publicados e no ar pelo GitHub Pages</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== DESTAQUES ========== -->
+  <section class="chapter" id="destaques" aria-labelledby="h-dest" style="padding-bottom:clamp(2rem,4vw,3rem)">
+    <div class="wrap">
+      <div class="chap-head">
+        <div class="chap-kanji" aria-hidden="true">記録</div>
+        <div class="chap-title">
+          <p class="mono">Estudos de caso · 4 projetos</p>
+          <h2 id="h-dest">Projetos em destaque</h2>
+          <p>Cada um resolve um problema de um negócio de verdade. Aqui está o problema, o que eu construí e com quais ferramentas.</p>
+          <div class="cut" aria-hidden="true"></div>
+        </div>
+      </div>
+    </div>
+    <div class="cases-pin" id="casesPin">
+      <div class="wrap">
+        <div class="cases" id="cases"></div>
+        <div class="cases-progress" aria-hidden="true"><span class="hint">Role para ver mais</span><div class="bar"><i id="casesBar"></i></div><span class="hint" id="casesCount">1 / 4</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== ARQUIVO ========== -->
+  <section class="chapter" id="arquivo" aria-labelledby="h-arq">
+    <div class="wrap">
+      <div class="chap-head">
+        <div class="chap-kanji" aria-hidden="true">書庫</div>
+        <div class="chap-title">
+          <p class="mono">Arquivo completo · <span id="repoTotal">19</span> repositórios</p>
+          <h2 id="h-arq">Todos os projetos do GitHub</h2>
+          <p>Do primeiro site ao mais recente, sem esconder os exercícios. Dá para ver a evolução linha por linha.</p>
+          <div class="cut" aria-hidden="true"></div>
+        </div>
+      </div>
+
+      <div class="toolbar">
+        <div class="filters" id="filters" role="group" aria-label="Filtrar projetos"></div>
+        <label class="search" for="q">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          <span class="sr-only">Buscar projeto</span>
+          <input id="q" type="search" placeholder="Buscar: react, 3D, pizza…" autocomplete="off">
+        </label>
+      </div>
+      <div class="registry" id="registry" aria-live="polite"></div>
+      <p class="archive-note" id="archiveNote">Lista dos repositórios públicos de <a href="https://github.com/carlosserra-a11y" target="_blank" rel="noopener">github.com/carlosserra-a11y</a>, outubro de 2026.</p>
+    </div>
+  </section>
+
+  <!-- ========== TRAJETÓRIA ========== -->
+  <section class="chapter" id="trajetoria" aria-labelledby="h-traj">
+    <div class="wrap">
+      <div class="chap-head">
+        <div class="chap-kanji" aria-hidden="true">道</div>
+        <div class="chap-title">
+          <p class="mono">Agosto → outubro de 2026</p>
+          <h2 id="h-traj">Dois meses de evolução</h2>
+          <p>O meu primeiro repositório se chama “meu-primeiro-site” e a descrição é <q>boa sorte carlos</q>. Oito semanas depois eu estava entregando sistema com banco de dados, testes e IA.</p>
+          <div class="cut" aria-hidden="true"></div>
+        </div>
+      </div>
+      <div class="timeline" id="timeline">
+        <div class="tl-fill" id="tlFill" aria-hidden="true"></div>
+        <div class="tl-item"><time datetime="2026-08-20">20 ago 2026</time><div><h3>Primeiro commit</h3><p>“meu-primeiro-site” (TechNova), uma página de currículo e “Alunos de ADS”: HTML e CSS na mão, menu fixo e rolagem suave.</p></div></div>
+        <div class="tl-item"><time datetime="2026-08-27">27 ago 2026</time><div><h3>Várias páginas e imagens</h3><p>Navegação entre páginas, imagens e links entre projetos publicados no GitHub Pages.</p></div></div>
+        <div class="tl-item"><time datetime="2026-09-03">03 set 2026</time><div><h3>Primeiro site para um negócio</h3><p>“Pizzaria do Michelangelo”: fundo animado, cardápio e seção sobre. Mesmo dia em que nasceu o repositório da Figaro's.</p></div></div>
+        <div class="tl-item"><time datetime="2026-09-17">17 set 2026</time><div><h3>Exercícios da FMP</h3><p>Apresentação pessoal com vídeo de fundo, página de divulgação de Florianópolis e página temática completa sobre Jujutsu Kaisen.</p></div></div>
+        <div class="tl-item"><time datetime="2026-10-01">01 out 2026</time><div><h3>Tailwind e loja real</h3><p>CS Store, loja de iPhones em Palhoça, com Tailwind, tema escuro, menu mobile e animações ao rolar.</p></div></div>
+        <div class="tl-item"><time datetime="2026-10-05">05–07 out 2026</time><div><h3>Smartech 1.0 → 3.0 em três dias</h3><p>Showroom 3D com three.js, modo Raio-X, calculadora pela norma NBR 14518, guia em áudio e consultor técnico com Gemini. Funções puras com testes.</p></div></div>
+        <div class="tl-item"><time datetime="2026-10-06">06 out 2026</time><div><h3>Full stack de verdade</h3><p>Figaro's Pizzaria: servidor Express, banco SQLite com histórico de pedidos, painel do desenvolvedor com senha em scrypt e modelos 3D feitos em código.</p></div></div>
+        <div class="tl-item"><time datetime="2026-10-11">11 out 2026</time><div><h3>TypeScript, React 19 e IA no pedido</h3><p>São Cristóvão 3.0: atendente que entende “quero 2 Cristóvão Bacon e uma Coca”, aviso de cookies (LGPD), headers de segurança e 10 arquivos de testes.</p></div></div>
+        <div class="tl-item"><time datetime="2026-10-16">16 out 2026</time><div><h3>Shader WebGL do zero</h3><p>Ingrid Lima: um olho realista desenhado só com shader, que segue o mouse, pisca e guia a rolagem. Sem nenhuma imagem.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== ARSENAL ========== -->
+  <section class="chapter" id="arsenal" aria-labelledby="h-ars">
+    <div class="wrap">
+      <div class="chap-head">
+        <div class="chap-kanji" aria-hidden="true">技</div>
+        <div class="chap-title">
+          <p class="mono">Habilidades com prova</p>
+          <h2 id="h-ars">Arsenal técnico</h2>
+          <p>Nada de barrinha com porcentagem inventada. Cada habilidade aponta para o projeto onde ela aparece.</p>
+          <div class="cut" aria-hidden="true"></div>
+        </div>
+      </div>
+      <div class="arsenal">
+        <div class="arm"><span class="k" aria-hidden="true">表</span><h3>Front-end</h3><dl>
+          <dt>HTML semântico e CSS moderno</dt><dd>Grid, tokens de design, tema claro/escuro. Visto em <a href="https://github.com/carlosserra-a11y/smartech-3.0" target="_blank" rel="noopener">Smartech 3.0</a></dd>
+          <dt>React 19 + TypeScript + Vite</dt><dd>Componentes, estado do carrinho, abas. Visto em <a href="https://github.com/carlosserra-a11y/sao-cristovao-3.0" target="_blank" rel="noopener">São Cristóvão 3.0</a></dd>
+          <dt>Tailwind CSS 4</dt><dd>Visto em <a href="https://github.com/carlosserra-a11y/csiphone" target="_blank" rel="noopener">CS Store</a> e São Cristóvão</dd>
+        </dl></div>
+        <div class="arm"><span class="k" aria-hidden="true">裏</span><h3>Back-end</h3><dl>
+          <dt>Node.js + Express 5</dt><dd>API REST, compressão, arquivos estáticos. Visto em <a href="https://github.com/carlosserra-a11y/Figarus-2.0" target="_blank" rel="noopener">Figaro's 2.0</a></dd>
+          <dt>SQLite</dt><dd>Histórico de pedidos e de alterações no cardápio</dd>
+          <dt>Autenticação</dt><dd>Senha com scrypt e código de primeiro acesso no painel admin</dd>
+        </dl></div>
+        <div class="arm"><span class="k" aria-hidden="true">動</span><h3>3D e animação</h3><dl>
+          <dt>three.js e WebGL</dt><dd>Modelos feitos em código, Raio-X com Fresnel, shader de olho. Visto em <a href="https://github.com/carlosserra-a11y/ingrid-market" target="_blank" rel="noopener">Ingrid Lima</a></dd>
+          <dt>GSAP + ScrollTrigger, Lenis</dt><dd>Animações guiadas pela rolagem, seções presas na tela</dd>
+          <dt>Performance</dt><dd>Laço único de animação, pausa fora da tela, queda automática para 2D</dd>
+        </dl></div>
+        <div class="arm"><span class="k" aria-hidden="true">知</span><h3>Inteligência artificial</h3><dl>
+          <dt>Google Gemini API</dt><dd>Atendente que monta pedido e consultor técnico com busca do Google</dd>
+          <dt>Gemini TTS</dt><dd>Guia em áudio com reserva na voz do navegador</dd>
+          <dt>Plano B sem IA</dt><dd>Sem chave de API, o site responde por uma base local</dd>
+        </dl></div>
+        <div class="arm"><span class="k" aria-hidden="true">守</span><h3>Qualidade e segurança</h3><dl>
+          <dt>Testes automatizados</dt><dd>15 arquivos de teste com <code>node:test</code>: preços, pedidos, horários, consentimento</dd>
+          <dt>LGPD e headers</dt><dd>Aviso de cookies, CSP, validação de links externos</dd>
+          <dt>Acessibilidade</dt><dd>Navegação por teclado, “reduzir movimento”, contraste</dd>
+        </dl></div>
+        <div class="arm"><span class="k" aria-hidden="true">道</span><h3>Ferramentas</h3><dl>
+          <dt>Git e GitHub</dt><dd>19 repositórios, publicação contínua no GitHub Pages</dd>
+          <dt>esbuild, npm</dt><dd>Empacotamento do 3D e das bibliotecas</dd>
+          <dt>IA no fluxo de trabalho</dt><dd>Uso assistentes de código com revisão e testes antes de publicar</dd>
+        </dl></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== MÉTODO ========== -->
+  <section class="chapter" id="metodo" aria-labelledby="h-met" style="padding-top:0">
+    <div class="wrap">
+      <div class="chap-head">
+        <div class="chap-kanji" aria-hidden="true">型</div>
+        <div class="chap-title">
+          <p class="mono">Como eu trabalho</p>
+          <h2 id="h-met">Do pedido ao site no ar</h2>
+          <div class="cut" aria-hidden="true"></div>
+        </div>
+      </div>
+      <div class="steps">
+        <div class="step"><span class="bar" aria-hidden="true"></span><h3>Entender o negócio</h3><p>Antes de abrir o editor: o que o cliente vende, como ele recebe pedidos e o que hoje dá errado.</p></div>
+        <div class="step"><span class="bar" aria-hidden="true"></span><h3>Desenhar a solução</h3><p>Identidade visual, tokens de cor e tipografia e o caminho mais curto até o pedido ou o contato.</p></div>
+        <div class="step"><span class="bar" aria-hidden="true"></span><h3>Construir com testes</h3><p>Regras de preço e de pedido viram funções puras com teste. O visual nunca quebra a regra.</p></div>
+        <div class="step"><span class="bar" aria-hidden="true"></span><h3>Publicar e melhorar</h3><p>No ar pelo GitHub Pages, medindo desempenho. Depois, uma versão 2.0 e 3.0 com o que aprendi.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FORMAÇÃO ========== -->
+  <section class="chapter" id="formacao" aria-labelledby="h-edu" style="padding-top:0">
+    <div class="wrap">
+      <div class="chap-head">
+        <div class="chap-kanji" aria-hidden="true">学</div>
+        <div class="chap-title">
+          <p class="mono">Formação</p>
+          <h2 id="h-edu">Estudando e construindo ao mesmo tempo</h2>
+          <div class="cut" aria-hidden="true"></div>
+        </div>
+      </div>
+      <div class="edu">
+        <div class="edu-card">
+          <p class="mono" style="color:var(--blood)">Graduação tecnológica · em andamento</p>
+          <h3>Análise e Desenvolvimento de Sistemas</h3>
+          <p class="muted">FMP · Faculdade Municipal de Palhoça · Palhoça/SC</p>
+          <div class="meter">
+            <div class="track" role="img" aria-label="2ª fase do curso"><i></i></div>
+            <span>2ª fase do curso</span>
+          </div>
+        </div>
+        <div class="learning">
+          <p class="mono muted">Estudando agora</p>
+          <ul>
+            <li>Banco de dados relacional e modelagem</li>
+            <li>Lógica de programação e estrutura de dados</li>
+            <li>Testes automatizados e boas práticas de Git</li>
+            <li>Inglês técnico para documentação</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== CONTATO ========== -->
+  <section class="contact" id="contato" aria-labelledby="h-cont">
+    <span class="big-k" aria-hidden="true">縁</span>
+    <div class="wrap">
+      <p class="mono muted">Contato</p>
+      <h2 id="h-cont">Vamos construir algo juntos?</h2>
+      <p>Estou procurando a primeira vaga de estágio ou júnior. Se o seu time precisa de alguém que aprende rápido e entrega projeto completo, me chame.</p>
+      <div class="copy-row" id="contactActions">
+        <a class="btn primary" href="https://github.com/carlosserra-a11y" target="_blank" rel="noopener">Ver meu GitHub</a>
+      </div>
+      <p class="copy-out" id="copyOut" role="status"></p>
+      <div class="contact-list" id="contactList">
+        <div><span>Cidade</span><b>Palhoça · SC · Brasil</b></div>
+        <div><span>GitHub</span><a href="https://github.com/carlosserra-a11y" target="_blank" rel="noopener">@carlosserra-a11y</a></div>
+        <div><span>Formato</span><b>Presencial, híbrido ou remoto</b></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Carlos Serra · Feito à mão em HTML, CSS e JavaScript</span>
+    <span>Tema inspirado em <i>Bleach: Thousand-Year Blood War</i> (fan art, sem vínculo com os detentores dos direitos)</span>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+/* ======================================================================
+   CONFIGURAÇÃO — o único lugar que você precisa editar.
+   Campos vazios somem da página sozinhos.
+   ====================================================================== */
+const CONFIG = {
+  github: "carlosserra-a11y",
+  email: "",        // ex.: "seuemail@gmail.com"  → aparece o botão "Copiar e-mail"
+  linkedin: "",     // ex.: "https://www.linkedin.com/in/seu-perfil"
+  whatsapp: "",     // só números com DDI e DDD, ex.: "5548999999999"
+  curriculo: "",    // link do PDF do currículo (Google Drive, GitHub…)
+  buscarRepos: true // tenta buscar repositórios novos na API do GitHub (quando o site estiver no ar)
+};
+
+const PAGES = n => `https://${CONFIG.github}.github.io/${n}/`;
+const REPO = n => `https://github.com/${CONFIG.github}/${n}`;
+
+/* ----- Projetos em destaque (estudos de caso) ----- */
+const CASES = [
+  { k:"炎", tint:"#4a1408", div:"一番隊", tag:"Full stack", name:"Figaro's Pizzaria 2.0", client:"Pizzaria em Palhoça/SC",
+    prob:"Cardápio grande (57 sabores salgados, 14 doces, combos) e pedidos que chegavam bagunçados no WhatsApp.",
+    did:["Montador de pizza com até 3 sabores e preço pela média dos sabores","Checkout com busca de CEP, taxa por bairro e resumo direto no WhatsApp","Servidor Express + SQLite com histórico de pedidos e painel admin com senha","Pizza 3D feita em código que se abre em leque com a rolagem"],
+    stack:["Node.js","Express 5","SQLite","three.js","Lenis","node:test"], repo:"Figarus-2.0", live:PAGES("Figarus-2.0") },
+  { k:"光", tint:"#0b2a3a", div:"二番隊", tag:"3D + IA", name:"Smartech 3.0", client:"Coifas industriais UV-C · Florianópolis",
+    prob:"Um produto técnico (coifa com lâmpadas UV-C) difícil de explicar só com foto.",
+    did:["Showroom 3D com modo Raio-X, vistas em corte e fichas técnicas clicáveis","Calculadora de vazão, duto e exaustor pela norma NBR 14518","Guia em áudio com Gemini TTS e consultor técnico com IA","Regras de cálculo em funções puras, com testes"],
+    stack:["three.js","GSAP","Gemini API","JavaScript","node:test"], repo:"smartech-3.0", live:PAGES("smartech-3.0") },
+  { k:"層", tint:"#3a2608", div:"三番隊", tag:"React + TS", name:"São Cristóvão 3.0", client:"Hamburgueria em Palhoça/SC",
+    prob:"Cliente perdido entre cardápio e iFood, sem saber o que pedir para quantas pessoas.",
+    did:["Hero com o burger que se desmonta em camadas conforme a rolagem","Atendente de IA que entende “quero 2 Cristóvão Bacon e uma Coca”","Carrinho persistente e resumo para pedir no iFood, sem coletar dados pessoais","Aviso de cookies (LGPD), headers de segurança e 10 arquivos de testes"],
+    stack:["React 19","TypeScript","Vite 8","Tailwind 4","Express","Gemini"], repo:"sao-cristovao-3.0", live:PAGES("sao-cristovao-3.0") },
+  { k:"眼", tint:"#2a0d2e", div:"四番隊", tag:"WebGL", name:"Ingrid Lima", client:"Vídeomaker mobile e social media",
+    prob:"Uma profissional de vídeo precisava de um site que chamasse atenção e levasse ao WhatsApp.",
+    did:["Olho realista desenhado só com shader WebGL, sem nenhuma imagem","Segue o mouse e o dedo, pisca sozinho e reage ao clique","Mergulho guiado pela rolagem com visor de câmera dentro da pupila","Portfólio com 9 vídeos verticais que tocam ao aparecer na tela"],
+    stack:["WebGL","GLSL","GSAP 3.13","JavaScript","Sem build"], repo:"ingrid-market", live:PAGES("ingrid-market") }
+];
+
+/* ----- Arquivo completo (dados reais dos repositórios) ----- */
+const CATS = { sistema:"Sistemas completos", negocio:"Sites para negócios", fmp:"Faculdade", inicio:"Primeiros passos" };
+const LANG_COLOR = { JavaScript:"#f1e05a", TypeScript:"#3178c6", HTML:"#e34c26" };
+const REPOS = [
+  { n:"ingrid-market", t:"Ingrid Lima · Vídeomaker", d:"Landing page com olho realista em WebGL que guia a rolagem e portfólio em vídeo vertical.", l:"JavaScript", c:"negocio", at:"2026-10-16", pages:true, tags:"webgl shader gsap landing" },
+  { n:"Figarus-2.0", t:"Figaro's Pizzaria 2.0", d:"Visual “Futurismo Quente”: tema escuro, vidro, brilho de brasa e animações ao rolar. Pedidos, banco de dados e painel.", l:"JavaScript", c:"sistema", at:"2026-10-14", pages:true, tags:"node express sqlite three 3d pizza" },
+  { n:"sao-cristovao-3.0", t:"São Cristóvão 3.0", d:"Cardápio digital com hero em vídeo guiado pela rolagem, abas e atendente de pedidos com IA.", l:"TypeScript", c:"sistema", at:"2026-10-11", pages:true, tags:"react typescript vite tailwind gemini ia burger" },
+  { n:"s-o-cristovao", t:"São Cristóvão Burger", d:"Primeira versão: smash burgers, carrinho persistente, assistente gastronômico e estúdio de imagens com Gemini.", l:"TypeScript", c:"sistema", at:"2026-10-08", pages:true, tags:"react typescript gemini ia burger" },
+  { n:"Figaros-Pizzaria", t:"Figaro's Pizzaria", d:"Cardápio completo, montador de pizza, checkout com CEP, SQLite e painel do desenvolvedor com senha.", l:"JavaScript", c:"sistema", at:"2026-10-08", pages:true, tags:"node express sqlite three 3d pizza" },
+  { n:"smartech-3.0", t:"Smartech 3.0", d:"Showroom 3D de coifas UV-C (Raio-X, corte e ficha técnica), calculadora NBR 14518, guia de áudio e consultor com IA.", l:"JavaScript", c:"negocio", at:"2026-10-07", pages:true, tags:"three 3d gsap gemini ia calculadora" },
+  { n:"smartech-2.0", t:"Smartech 2.0", d:"Site institucional sem build: temas claro e escuro, calculadora testável e GSAP com bibliotecas verificadas por SRI.", l:"JavaScript", c:"negocio", at:"2026-10-06", pages:true, tags:"gsap three calculadora" },
+  { n:"smartech", t:"Smartech Coifas", d:"Primeira versão do site da Smartech: coifas industriais e tecnologia UV-C.", l:"HTML", c:"negocio", at:"2026-10-05", pages:true, tags:"tailwind institucional" },
+  { n:"csiphone", t:"CS Store", d:"Loja de iPhones novos e seminovos em Palhoça, com Tailwind, tema escuro e menu mobile.", l:"HTML", c:"negocio", at:"2026-10-01", pages:true, tags:"tailwind loja ecommerce" },
+  { n:"Exerc-cio-3-P-gina-tem-tica-completa", t:"Página temática completa", d:"Exercício da FMP: página completa sobre o anime Jujutsu Kaisen.", l:"HTML", c:"fmp", at:"2026-09-17", pages:true, tags:"exercicio anime" },
+  { n:"Exerc-cio-2-P-gina-de-divulga-o-de-um-lugar", t:"Conheça Florianópolis", d:"Exercício da FMP: página de divulgação de um lugar.", l:"HTML", c:"fmp", at:"2026-09-17", pages:true, tags:"exercicio turismo" },
+  { n:"Exerc-cio-1-P-gina-de-apresenta-o-pessoal", t:"Apresentação pessoal", d:"Exercício da FMP: apresentação com vídeo de fundo em loop.", l:"HTML", c:"fmp", at:"2026-09-17", pages:true, tags:"exercicio video" },
+  { n:"pizzaria", t:"Pizzaria do Michelangelo", d:"Primeiro site para um negócio: fundo animado, cardápio e seção sobre.", l:"HTML", c:"inicio", at:"2026-09-03", pages:true, tags:"pizza" },
+  { n:"paginacomimagem", t:"Página com imagem", d:"Três páginas ligadas entre si, com imagem e link para o currículo publicado.", l:"HTML", c:"inicio", at:"2026-08-27", pages:true, tags:"html" },
+  { n:"Trabalho-web", t:"Trabalho web", d:"Trabalho de faculdade com navegação entre três páginas.", l:"HTML", c:"fmp", at:"2026-08-27", pages:true, tags:"html exercicio" },
+  { n:"meu-primeiro-site", t:"Meu primeiro site", d:"TechNova: o primeiro site, com menu fixo e rolagem suave. Descrição do repositório: “boa sorte carlos”.", l:"HTML", c:"inicio", at:"2026-08-20", pages:true, tags:"html css" },
+  { n:"hello-word-versao-2", t:"Alunos de ADS", d:"Página sobre o curso de Análise e Desenvolvimento de Sistemas e o perfil dos alunos.", l:"HTML", c:"inicio", at:"2026-08-20", pages:true, tags:"html ads" },
+  { n:"curriculumprogramador", t:"Currículo (HTML)", d:"Modelo de currículo em HTML e CSS, publicado no GitHub Pages.", l:"HTML", c:"inicio", at:"2026-08-20", pages:true, tags:"curriculo" },
+  { n:"Curriculum-programador", t:"Curriculum-programador", d:"Repositório criado para o currículo; ainda vazio.", l:"", c:"inicio", at:"2026-08-20", pages:false, tags:"curriculo" }
+];
+
+const $ = (s, r=document) => r.querySelector(s);
+const $$ = (s, r=document) => [...r.querySelectorAll(s)];
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
+const MESES = ["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"];
+const fmtDate = iso => { const [y,m,d] = iso.split("-"); return `${d} ${MESES[+m-1]} ${y}`; };
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const arrow = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>';
+
+/* ----- render: destaques ----- */
+$("#cases").innerHTML = CASES.map(c => `
+  <article class="case" style="--tint:${c.tint}">
+    <div class="case-art" aria-hidden="true">
+      <span class="div"><b>${c.div}</b>Destaque</span>
+      <span class="ring"></span>
+      <span class="k">${c.k}</span>
+      <span class="tag">${esc(c.tag)}</span>
+    </div>
+    <div class="case-body">
+      <p class="mono client">${esc(c.client)}</p>
+      <h3>${esc(c.name)}</h3>
+      <p class="prob"><strong style="color:var(--bone)">Problema:</strong> ${esc(c.prob)}</p>
+      <ul>${c.did.map(x => `<li>${esc(x)}</li>`).join("")}</ul>
+      <div class="chips">${c.stack.map(s => `<span class="chip">${esc(s)}</span>`).join("")}</div>
+      <div class="links">
+        <a href="${c.live}" target="_blank" rel="noopener">Ver ao vivo ${arrow}</a>
+        <a href="${REPO(c.repo)}" target="_blank" rel="noopener">Código no GitHub ${arrow}</a>
+      </div>
+    </div>
+  </article>`).join("");
+
+/* ----- render: arquivo com filtros e busca ----- */
+let state = { cat:"todos", q:"" };
+let repos = REPOS.slice();
+
+function renderFilters(){
+  const counts = repos.reduce((a,r) => (a[r.c] = (a[r.c]||0) + 1, a), {});
+  const opts = [["todos","Todos",repos.length], ...Object.entries(CATS).map(([k,v]) => [k,v,counts[k]||0])];
+  $("#filters").innerHTML = opts.map(([k,label,n]) =>
+    `<button type="button" data-cat="${k}" aria-pressed="${state.cat===k}">${label}<small>${n}</small></button>`).join("");
+  $("#repoTotal").textContent = repos.length;
+}
+function renderRegistry(){
+  const q = state.q.trim().toLowerCase();
+  const list = repos.filter(r => (state.cat==="todos" || r.c===state.cat) &&
+    (!q || [r.n,r.t,r.d,r.l,r.tags,CATS[r.c]].join(" ").toLowerCase().includes(q)))
+    .sort((a,b) => b.at.localeCompare(a.at));
+  $("#registry").innerHTML = list.length ? list.map(r => `
+    <article class="row">
+      <time datetime="${r.at}">${fmtDate(r.at)}</time>
+      <h3>${esc(r.t)}${r.isNew ? '<span class="new">NOVO</span>' : ""}<small>${esc(r.n)}</small></h3>
+      <p>${esc(r.d)}</p>
+      <span class="lang">${r.l ? `<i style="--c:${LANG_COLOR[r.l]||"#888"}"></i>${esc(r.l)}` : '<span class="muted">—</span>'}</span>
+      <div class="acts">
+        ${r.pages ? `<a href="${PAGES(r.n)}" target="_blank" rel="noopener" aria-label="Ver ${esc(r.t)} ao vivo">Ao vivo</a>` : ""}
+        <a href="${REPO(r.n)}" target="_blank" rel="noopener" aria-label="Código de ${esc(r.t)} no GitHub">Código</a>
+      </div>
+    </article>`).join("") : `<p class="empty">Nenhum projeto encontrado para “${esc(state.q)}”. Tente “react”, “3D” ou “pizza”.</p>`;
+}
+$("#filters").addEventListener("click", e => {
+  const b = e.target.closest("button[data-cat]"); if (!b) return;
+  state.cat = b.dataset.cat; renderFilters(); renderRegistry();
+  if (window.ScrollTrigger) ScrollTrigger.refresh();
+});
+$("#q").addEventListener("input", e => { state.q = e.target.value; renderRegistry(); });
+renderFilters(); renderRegistry();
+
+/* Quando o site estiver no ar (GitHub Pages), busca repositórios novos que ainda não estão na lista. */
+if (CONFIG.buscarRepos && /github\.io$|localhost|127\.0\.0\.1/.test(location.hostname)) {
+  fetch(`https://api.github.com/users/${CONFIG.github}/repos?per_page=100&sort=pushed`)
+    .then(r => r.ok ? r.json() : [])
+    .then(data => {
+      const known = new Set(repos.map(r => r.n.toLowerCase()));
+      const extra = data.filter(g => !g.fork && !known.has(g.name.toLowerCase())).map(g => ({
+        n:g.name, t:g.name.replace(/[-_]/g," "), d:g.description || "Projeto novo no GitHub.", l:g.language || "",
+        c: g.language === "TypeScript" ? "sistema" : "negocio", at:(g.pushed_at||g.created_at).slice(0,10), pages:!!g.has_pages, tags:"", isNew:true }));
+      if (!extra.length) return;
+      repos = extra.concat(repos);
+      renderFilters(); renderRegistry();
+      $("#archiveNote").innerHTML += ` <span class="muted">Atualizado agora pela API do GitHub (+${extra.length}).</span>`;
+    }).catch(() => {});
+}
+
+/* ----- contato a partir do CONFIG ----- */
+(function contact(){
+  const actions = $("#contactActions"), list = $("#contactList"), out = $("#copyOut");
+  if (CONFIG.email) {
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "btn primary"; b.textContent = "Copiar e-mail";
+    b.addEventListener("click", () => {
+      navigator.clipboard?.writeText(CONFIG.email)
+        .then(() => out.textContent = `Copiado: ${CONFIG.email}`)
+        .catch(() => out.textContent = `Meu e-mail: ${CONFIG.email}`);
+    });
+    actions.prepend(b);
+    actions.querySelector('a.btn.primary')?.classList.remove("primary");
+    list.insertAdjacentHTML("afterbegin", `<div><span>E-mail</span><b>${esc(CONFIG.email)}</b></div>`);
+  }
+  if (CONFIG.linkedin) {
+    actions.insertAdjacentHTML("beforeend", `<a class="btn" href="${esc(CONFIG.linkedin)}" target="_blank" rel="noopener">LinkedIn</a>`);
+    list.insertAdjacentHTML("beforeend", `<div><span>LinkedIn</span><a href="${esc(CONFIG.linkedin)}" target="_blank" rel="noopener">${esc(CONFIG.linkedin.replace(/^https?:\/\/(www\.)?/,""))}</a></div>`);
+  }
+  if (CONFIG.whatsapp) {
+    actions.insertAdjacentHTML("beforeend", `<a class="btn" href="https://wa.me/${esc(CONFIG.whatsapp)}" target="_blank" rel="noopener">WhatsApp</a>`);
+  }
+  if (CONFIG.curriculo) {
+    actions.insertAdjacentHTML("beforeend", `<a class="btn" href="${esc(CONFIG.curriculo)}" target="_blank" rel="noopener">Currículo em PDF</a>`);
+  }
+})();
+
+/* ----- partículas de reishi (canvas) ----- */
+const reishi = (() => {
+  const cv = $("#reishi"); if (reduce || !cv.getContext) return { set(){} };
+  const ctx = cv.getContext("2d");
+  let w, h, dpr, parts = [], hot = 0, running = true, mx = -1e3, my = -1e3;
+  const N = () => Math.round(Math.min(90, (innerWidth * innerHeight) / 16000));
+  function size(){ dpr = Math.min(2, devicePixelRatio || 1); w = cv.width = innerWidth * dpr; h = cv.height = innerHeight * dpr; }
+  function spawn(p = {}){ return Object.assign(p, { x:Math.random()*w, y:h + Math.random()*h*.4, r:(Math.random()*1.6+.4)*dpr,
+    v:(Math.random()*.5+.2)*dpr, s:Math.random()*Math.PI*2, a:Math.random()*.6+.2 }); }
+  function init(){ size(); parts = Array.from({ length:N() }, () => { const p = spawn(); p.y = Math.random()*h; return p; }); }
+  let scrollV = 0, lastY = scrollY;
+  addEventListener("scroll", () => { scrollV += Math.abs(scrollY - lastY) * .02; lastY = scrollY; }, { passive:true });
+  addEventListener("pointermove", e => { mx = e.clientX * dpr; my = e.clientY * dpr; }, { passive:true });
+  function tick(){
+    if (!running) return;
+    ctx.clearRect(0,0,w,h);
+    scrollV *= .92;
+    const speed = 1 + Math.min(6, scrollV) + hot * 2.5;
+    for (const p of parts){
+      p.s += .02; p.y -= p.v * speed; p.x += Math.sin(p.s) * .3 * dpr;
+      const dx = p.x - mx, dy = p.y - my, d2 = dx*dx + dy*dy, R = 120 * dpr;
+      if (d2 < R*R){ const f = (1 - Math.sqrt(d2)/R) * 2.2; p.x += dx / Math.sqrt(d2 + 1) * f; p.y += dy / Math.sqrt(d2 + 1) * f; }
+      if (p.y < -10) spawn(p);
+      ctx.beginPath(); ctx.arc(p.x, p.y, p.r * (1 + hot * .6), 0, Math.PI*2);
+      ctx.fillStyle = hot ? `rgba(227,19,47,${p.a})` : `rgba(181,208,255,${p.a * .8})`;
+      ctx.shadowBlur = 8 * dpr; ctx.shadowColor = hot ? "#e3132f" : "#b5d0ff";
+      ctx.fill();
+    }
+    requestAnimationFrame(tick);
+  }
+  addEventListener("resize", init);
+  document.addEventListener("visibilitychange", () => { running = !document.hidden; if (running) requestAnimationFrame(tick); });
+  init(); requestAnimationFrame(tick);
+  return { set(v){ hot = v ? 1 : 0; } };
+})();
+
+/* ----- modo Bankai ----- */
+(function bankai(){
+  const btn = $("#bankai"), flash = $("#flash");
+  function toggle(){
+    const on = btn.getAttribute("aria-pressed") !== "true";
+    btn.setAttribute("aria-pressed", on);
+    document.documentElement.classList.toggle("bankai", on);
+    reishi.set(on);
+    $("#heroKanji").textContent = on ? "魂" : "斬";
+    if (on && !reduce && window.gsap) gsap.fromTo(flash, { opacity:.95 }, { opacity:0, duration:.9, ease:"power2.out" });
+  }
+  btn.addEventListener("click", toggle);
+  addEventListener("keydown", e => {
+    if (e.key.toLowerCase() === "b" && !e.metaKey && !e.ctrlKey && !e.altKey && !/input|textarea/i.test(e.target.tagName)) toggle();
+  });
+})();
+
+/* ----- seção ativa no menu ----- */
+(function spy(){
+  const links = $$('.nav ul a'); const map = new Map(links.map(a => [a.getAttribute("href").slice(1), a]));
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    if (e.isIntersecting){ links.forEach(a => a.removeAttribute("aria-current")); map.get(e.target.id)?.setAttribute("aria-current","true"); }
+  }), { rootMargin:"-45% 0px -50% 0px" });
+  map.forEach((_, id) => { const s = document.getElementById(id); s && io.observe(s); });
+})();
+
+/* ----- barra de progresso (funciona sem GSAP) ----- */
+(function progress(){
+  const bar = $("#progress");
+  const upd = () => { const m = document.documentElement.scrollHeight - innerHeight; bar.style.transform = `scaleX(${m > 0 ? scrollY / m : 0})`; };
+  addEventListener("scroll", upd, { passive:true }); addEventListener("resize", upd); upd();
+})();
+
+/* ======================================================================
+   ANIMAÇÕES DE ROLAGEM (GSAP + ScrollTrigger)
+   Tudo começa visível; as animações só refinam. Sem GSAP ou com
+   "reduzir movimento", a página fica completa e parada.
+   ====================================================================== */
+if (window.gsap && window.ScrollTrigger && !reduce) {
+  gsap.registerPlugin(ScrollTrigger);
+  document.documentElement.classList.add("gsap-on");
+  const mm = gsap.matchMedia();
+
+  /* abertura: um corte vermelho atravessa a tela e o nome sobe */
+  const intro = gsap.timeline({ defaults:{ ease:"expo.out" } });
+  intro.set("#introCut", { opacity:1 })
+    .to("#introCut", { scaleX:1, duration:.55, ease:"power4.in" })
+    .to("#introCut", { opacity:0, duration:.35 }, ">-.05")
+    .from(".hero h1 .line > span", { yPercent:110, duration:1.1, stagger:.12 }, "<-.15")
+    .from(".slash", { scaleX:0, duration:.8 }, "<.25")
+    .from(".sigil", { scale:.85, rotate:-25, opacity:.3, duration:1.4 }, "<-.4")
+    .from(".hero-copy > :not(h1):not(.slash)", { y:18, opacity:.2, duration:.8, stagger:.06 }, "<.1");
+
+  /* o giro: o ensō e o texto em órbita giram com a rolagem */
+  gsap.to("#enso", { rotate:360, ease:"none", scrollTrigger:{ trigger:document.body, start:"top top", end:"bottom bottom", scrub:1.2 } });
+  gsap.to("#orbit", { rotate:-540, ease:"none", scrollTrigger:{ trigger:document.body, start:"top top", end:"bottom bottom", scrub:.6 } });
+  gsap.to(".sigil .kanji span", { yPercent:18, scale:1.12, ease:"none", scrollTrigger:{ trigger:".hero", start:"top top", end:"bottom top", scrub:true } });
+  gsap.to(".hero h1", { yPercent:-12, ease:"none", scrollTrigger:{ trigger:".hero", start:"top top", end:"bottom top", scrub:true } });
+
+  /* marquee acelera conforme a rolagem */
+  const track = $(".marquee .track");
+  ScrollTrigger.create({ trigger:".marquee", start:"top bottom", end:"bottom top",
+    onUpdate:s => { track.style.animationDuration = `${Math.max(8, 38 - Math.abs(s.getVelocity()) / 60)}s`; } });
+
+  /* cartões de título: kanji desce, corte vermelho atravessa */
+  $$(".chap-head").forEach(h => {
+    const tl = gsap.timeline({ scrollTrigger:{ trigger:h, start:"top 82%" } });
+    tl.from(h.querySelector(".chap-kanji"), { yPercent:-30, opacity:.15, duration:1, ease:"expo.out" })
+      .from(h.querySelector(".cut"), { scaleX:0, duration:1.1, ease:"expo.out" }, "<.1")
+      .from(h.querySelectorAll(".chap-title > :not(.cut)"), { y:24, opacity:.2, duration:.8, stagger:.08, ease:"power3.out" }, "<");
+  });
+
+  /* resumo e números */
+  gsap.from(".brief article", { y:40, opacity:.2, duration:.9, stagger:.1, ease:"power3.out", scrollTrigger:{ trigger:".brief", start:"top 85%" } });
+  gsap.from(".numbers div", { y:30, opacity:.2, duration:.8, stagger:.08, ease:"power3.out", scrollTrigger:{ trigger:".numbers", start:"top 88%" } });
+
+  /* contadores do hero */
+  $$("[data-count]").forEach(el => {
+    const end = +el.dataset.count, o = { v:0 };
+    gsap.to(o, { v:end, duration:1.6, delay:.6, ease:"power2.out", onUpdate:() => el.textContent = Math.round(o.v) });
+  });
+
+  /* destaques: rolagem horizontal presa na tela (computador) */
+  mm.add("(min-width: 900px)", () => {
+    const cases = $("#cases"), cards = $$(".case", cases);
+    const dist = () => cases.scrollWidth - cases.parentElement.clientWidth;
+    const tween = gsap.to(cases, { x:() => -dist(), ease:"none",
+      scrollTrigger:{ trigger:"#casesPin", start:"center center", end:() => "+=" + dist(), pin:true, scrub:.8, invalidateOnRefresh:true,
+        onUpdate:s => {
+          $("#casesBar").style.transform = `scaleX(${.25 + s.progress * .75})`;
+          $("#casesCount").textContent = `${Math.min(cards.length, 1 + Math.round(s.progress * (cards.length - 1)))} / ${cards.length}`;
+        } } });
+    cards.forEach(card => {
+      gsap.from(card.querySelector(".k"), { rotate:-18, scale:.8, ease:"none",
+        scrollTrigger:{ trigger:card, containerAnimation:tween, start:"left right", end:"center center", scrub:true } });
+      gsap.to(card.querySelector(".ring"), { rotate:180, ease:"none",
+        scrollTrigger:{ trigger:card, containerAnimation:tween, start:"left right", end:"right left", scrub:true } });
+    });
+  });
+  mm.add("(max-width: 899px)", () => {
+    $$(".case").forEach(card => gsap.from(card, { y:50, opacity:.2, duration:.9, ease:"power3.out", scrollTrigger:{ trigger:card, start:"top 88%" } }));
+  });
+
+  /* arquivo: linhas entram em cascata */
+  ScrollTrigger.batch(".row", { start:"top 92%", once:true,
+    onEnter:b => gsap.from(b, { x:-30, opacity:.2, duration:.6, stagger:.05, ease:"power3.out" }) });
+
+  /* trajetória: a lâmina vermelha desce com a rolagem */
+  gsap.fromTo("#tlFill", { scaleY:0 }, { scaleY:1, ease:"none", scrollTrigger:{ trigger:"#timeline", start:"top 70%", end:"bottom 60%", scrub:true } });
+  $$(".tl-item").forEach(it => gsap.from(it, { x:40, opacity:.2, duration:.8, ease:"power3.out", scrollTrigger:{ trigger:it, start:"top 85%" } }));
+
+  /* arsenal e método */
+  gsap.from(".arm", { y:40, opacity:.2, duration:.8, stagger:.08, ease:"power3.out", scrollTrigger:{ trigger:".arsenal", start:"top 85%" } });
+  $$(".arm .k").forEach(k => gsap.to(k, { rotate:25, yPercent:30, ease:"none", scrollTrigger:{ trigger:k.parentElement, start:"top bottom", end:"bottom top", scrub:true } }));
+  gsap.from(".step .bar", { scaleX:0, duration:1, stagger:.18, ease:"expo.out", scrollTrigger:{ trigger:".steps", start:"top 85%" } });
+  gsap.from(".meter .track i", { width:0, duration:1.4, ease:"expo.out", scrollTrigger:{ trigger:".meter", start:"top 90%" } });
+
+  /* contato: kanji gigante gira e o título sobe */
+  gsap.from(".contact .big-k", { rotate:-35, scale:.7, ease:"none", scrollTrigger:{ trigger:".contact", start:"top bottom", end:"bottom bottom", scrub:true } });
+  gsap.from(".contact h2", { y:60, opacity:.2, duration:1.1, ease:"expo.out", scrollTrigger:{ trigger:".contact", start:"top 75%" } });
+
+  /* a barra de progresso fica a cargo do código acima; aqui só garante o recálculo depois das fontes */
+  document.fonts?.ready.then(() => ScrollTrigger.refresh());
+}
+</script>
+</body>
+</html>

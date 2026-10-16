@@ -1,7 +1,8 @@
 # Identidade visual · Portfólio Carlos Serra
 
 Baseada nas referências de *Bleach: Thousand-Year Blood War* que o Carlos enviou: dois pôsteres oficiais, um quadro do mangá e duas cenas do Wandenreich.
-**Nenhuma imagem oficial é usada no site.** Tudo (cidade, lua, tinta, partículas, kanji) é desenhado em código e é original.
+Por padrão **nenhuma imagem oficial é usada**: tudo (cidade, lua, horizonte, tropa, tinta, partículas, kanji) é desenhado em código e é original.
+Na versão 3.0 as 5 imagens podem entrar como cenas com paralaxe, se você quiser (`CONFIG.imagensOficiais` e `assets/bleach/LEIA-ME.md`).
 
 ## O que tiramos de cada referência
 
@@ -55,8 +56,12 @@ Regra de proporção: 70% preto e azul-noite, 20% branco frio, 10% vermelho. O v
 
 ## Movimento
 
-- Abertura: a tela se parte num corte vermelho e o nome sobe.
-- Paralaxe de 6 camadas no hero (céu, lua, cidade distante, cidade próxima, névoa, tinta), com rolagem e mouse.
+- Abertura: a tela se parte num corte vermelho e o nome sobe letra por letra (CSS puro, uma vez por sessão).
+- Faixa de tinta: um pincel revela a cena e o papel sobe até virar a página de mangá.
+- Trajetória: o horizonte fica preso na tela e faz zoom lento enquanto a lâmina vermelha desce.
+- Contato: a câmera passa pela tropa (deslize horizontal com a rolagem).
+- Paralaxe em camadas no hero (céu, lua, cidade distante, cidade próxima, névoa, tinta), com rolagem e mouse. Com as imagens oficiais: 3 profundidades a partir do mesmo pôster, zoom de 1 a 1,15 e escurecimento ao rolar.
+- Ensō, tinta e pincel são pré-desenhados com filtro de turbulência e salvos em `assets/arte/`: o visual é o mesmo e o celular não recalcula filtro a cada quadro.
 - Rolagem suave (Lenis), títulos que se decodificam em katakana, quadros de mangá "entintados" ao entrar.
 - Cursor de reiatsu, botões magnéticos, cartões com inclinação 3D e brilho.
 - Tudo respeita "reduzir movimento": sem animação, a página fica completa e parada.

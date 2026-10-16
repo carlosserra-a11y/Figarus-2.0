@@ -1,6 +1,9 @@
 # Prompt completo · LeadPage do Carlos Serra (versão 3.0)
 
 Prompt para recriar e melhorar todo o projeto em qualquer IA de código (Claude, Lovable, v0, Cursor, Bolt).
+
+> Esta pasta já é a versão 3.0 construída a partir deste prompt. Diferenças conscientes: os scripts são clássicos (não módulos ES)
+> para o site abrir com dois cliques no `index.html`; o atalho `/` vai para a busca do arquivo e a paleta abre com Ctrl K.
 Copie tudo o que está dentro do bloco abaixo. Antes, coloque as imagens na pasta `assets/bleach/`
 com os nomes da tabela "IMAGENS" do prompt.
 
